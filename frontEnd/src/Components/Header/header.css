@@ -1,0 +1,51 @@
+.search{
+    border: solid 1.5px transparent ;
+}
+.search:hover{
+    transition: .1s all linear;
+    border-color: rgb(202, 122, 135);
+}
+
+.search_btn2{
+    background-color: transparent;
+    border: solid 1px rgba(128, 128, 128, 0.188);
+    border-radius: 6px;
+}
+.search_btn2:hover{
+    transition: .1s all linear;
+    background-color: rgba(128, 128, 128, 0.086) ;
+}
+.menu_btn{
+    background-color: rgba(128, 128, 128, 0.093);
+    border-radius: 5px;
+}
+
+.option_btn{
+    font-weight: 600;
+}
+.option_btn:hover{
+    transition: .2s all linear;
+    color:rgb(41, 128, 214)
+}
+
+@media (max-width:768px){ 
+    .option_container{
+        position:absolute;
+        top:100%;
+        right: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(to right, rgba(76, 0, 130, 0.829),rgba(128, 0, 128, 0.851),rgba(242, 164, 177, 0.891)); 
+        row-gap: 1.4rem;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        transition: .2s all linear;
+    }
+    .option_container.active{
+        transition: .2s all linear;
+        top:-10em;
+    }
+
+}
