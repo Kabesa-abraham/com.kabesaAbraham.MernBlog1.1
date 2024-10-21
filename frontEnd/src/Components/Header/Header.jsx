@@ -45,7 +45,8 @@ const Header = () => {
 
       <Link to='/sign-in' >
         <button 
-          className='bg-gradient-to-br from-indigo-700 to-blue-400 text-white font-semibold px-2 py-2 rounded-lg' >
+          className='bg-gradient-to-br from-indigo-700 to-blue-400  
+                   text-white font-semibold px-2 py-2 rounded-lg' >
           Se Connecter
         </button>
       </Link>
