@@ -1,11 +1,12 @@
 const User = require("../models/user.model");
-const bcryptjs = require('bcryptjs') //va me permettre de crypter mon mot de passe
+const bcryptjs = require('bcryptjs'); //va me permettre de crypter mon mot de passe
+const errorHandler = require("../utils/error");
 
-const signup = async(req,res) =>{
+const signup = async(req,res,next) =>{
    const {username,email,password} = req.body;
 
    if(!username || !email || !password || username=== '' || email=== '' || password=== ''){
-    res.status(400).json({message:'tout les champs sont obligatoire!!'});
+    next(errorHandler(400, 'Tout les champs sont obligatoire'))  //la logique de cette erreur se trouve dans le dossier util
    }
 
    const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -19,7 +20,7 @@ const signup = async(req,res) =>{
     await newUser.save();
     res.json('signup successful')
    }catch(error){
-    res.status(500).json({message:error.message})
+    next(error) // la logique pour ça se trouve dans app.js
    }
    
 }
