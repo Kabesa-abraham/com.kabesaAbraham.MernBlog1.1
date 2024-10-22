@@ -36,7 +36,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(to right, rgba(76, 0, 130, 0.829),rgba(128, 0, 128, 0.851),rgba(242, 164, 177, 0.891)); 
+        background: rgba(128, 0, 128, 0.851); 
         row-gap: 1.4rem;
         padding: 20px;
         color: white;
