@@ -7,3 +7,10 @@
 .fieldcontain input{
     @apply py-2 pl-3 bg-gray-100 border border-gray-300 rounded-lg outline-none
 }
+
+.theContainer .signup_btn{
+    @apply text-white h-[40px] rounded-md  mt-4
+}
+.theContainer .circularprogress{
+    @apply text-white mr-3
+}
