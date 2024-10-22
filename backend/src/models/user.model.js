@@ -12,12 +12,12 @@ const userSchema = new mongoose.Schema({
         unique:true
     },
     password:{
-        type:string,
+        type:String,
         required:true
     }
-}, {timestamps: true} //nous avons mis ça pour que ça sauvegarde automatique le temps de création du user et du mise à jour(si il y'en a)
+}, {timestamps: true} //nous avons mis ça pour que ça sauvegarde automatique le temps de création du user et du mise à jour
 );
 
 const User = mongoose.model('User',userSchema)
 
-module.exports= User;
+module.exports=User;
