@@ -35,7 +35,7 @@ const Footer = () => {
                 <h1 className='text-xl font-bold text-gray-500 my-3' >NOUS SUIVREZ</h1>
                 <div className='flex flex-col gap-4 text-lg font-semibold text-gray-400' >
                   <span>
-                    <a href="https://www.github.com/kabesayebula" target='_blank' 
+                    <a href="https://www.github.com/Kabesa-abraham" target='_blank' 
                        className='flex gap-3 items-center' >Github <FaGithub/></a>
                   </span>
                   <span>
@@ -61,7 +61,6 @@ const Footer = () => {
         </div>
 
        <hr className='my-5' />
-
         <div className='w-full sm:flex sm:items-center sm:justify-between' >
           <a href='#' className='text-gray-400 text-xl '>&#169; {new Date().getFullYear()} Abram's Blog  </a>
           <div className='flex gap-6 sm:gap-11 sm:mt-0 mt-4 text-3xl sm:justify-center text-gray-400' >
