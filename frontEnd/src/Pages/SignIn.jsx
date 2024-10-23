@@ -15,7 +15,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (e) =>{  //cette fonction va me permettre de prendre les valeurs de mes différents champs
+  const handleChange = (e) =>{ //cette fonction va me permettre de prendre les valeurs de mes différents champs
     setFormData({...formData , [e.target.id] : e.target.value.trim()}) // ici j'ai utilisé l'id mais on peut aussi utiliser l'attribut name
   }
 
@@ -47,7 +47,7 @@ const SignIn = () => {
 
       //setLoading(false) plus besoin de ça car signInFaillure qu'on a mis ci-haut met ça déjà à false
 
-      if(res.ok){ // si tout va très bien alors on va aller à la page sign in
+      if(res.ok){ //si tout va très bien alors on va aller à la page sign in
         dispatch(signInSuccess(data))
         navigate('/')
       }
