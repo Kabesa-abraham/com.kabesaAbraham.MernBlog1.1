@@ -3,12 +3,16 @@ import './Style/sign_in_up.css'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button,CircularProgress } from '@mui/material'
 import { MdError } from "react-icons/md";
+import { useDispatch,useSelector } from 'react-redux'; //va me permettre d'utiliser les différents fonctions comme signinStart
+import { signInStart,signInSuccess,signInFaillure } from '../redux/user/userSlice';
 
 const SignIn = () => {
 
   const [formData,setFormData] = useState({}) //ce useState va récuperer les differents valeur des champs
-  const [errorMessage, setErrorMessage] = useState(null) // ceci va être utilisé si vous avez une erreur
-  const [loading, setLoading] = useState(false) // ceci va nous permettre de faire un effet d'attente
+  //const [errorMessage, setErrorMessage] = useState(null) // ceci va être utilisé si vous avez une erreur
+  //const [loading, setLoading] = useState(false) // ceci va nous permettre de faire un effet d'attente
+  const {loading , error: errorMessage} = useSelector(state => state.user) //pour selectionner ces differents valeurs du userSlice.js
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) =>{  //cette fonction va me permettre de prendre les valeurs de mes différents champs
@@ -19,13 +23,16 @@ const SignIn = () => {
     e.preventDefault();
 
     if(!formData.email || !formData.password){
-      return setErrorMessage("S'il vous plait remplissez tout les champs")
+      //return setErrorMessage("S'il vous plait remplissez tout les champs")
+      return dispatch(signInFaillure("S'il vous plait remplissez tout les champs"))
     }
 
     try{
-      setLoading(true)
+      // setLoading(true)
+      // setErrorMessage(null) //pour nettoyer cette state
 
-      setErrorMessage(null) //pour nettoyer cette state
+      dispatch(signInStart()) //au lieu d'utiliser les deux fonc que j'ai mis ci-haut j'ai mis ça
+
       const res =  await fetch('/backend/auth/signin' ,{
         method:'POST',
         headers:{ "Content-Type" : 'application/json' },
@@ -34,18 +41,21 @@ const SignIn = () => {
       const data = await res.json();
 
       if(data.success === false){ //cette erreur va s'afficher si les données sont déjà existant dans la base de données
-        return setErrorMessage(data.message);
+        //return setErrorMessage(data.message);
+        dispatch(signInFaillure(data.message))
       }
 
-      setLoading(false)
+      //setLoading(false) plus besoin de ça car signInFaillure qu'on a mis ci-haut met ça déjà à false
 
       if(res.ok){ // si tout va très bien alors on va aller à la page sign in
+        dispatch(signInSuccess(data))
         navigate('/')
       }
 
     }catch(error){
-      setErrorMessage(error.message)
-      setLoading(false)
+      // setErrorMessage(error.message)
+      // setLoading(false)
+      dispatch(signInFaillure(error.message))
     }
   }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
