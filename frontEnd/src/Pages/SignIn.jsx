@@ -5,6 +5,7 @@ import { Alert, Button,CircularProgress } from '@mui/material'
 import { MdError } from "react-icons/md";
 import { useDispatch,useSelector } from 'react-redux'; //va me permettre d'utiliser les différents fonctions comme signinStart
 import { signInStart,signInSuccess,signInFaillure } from '../redux/user/userSlice';
+import Oauth from '../Components/oauthgoogle/Oauth';
 
 const SignIn = () => {
 
@@ -100,7 +101,7 @@ const SignIn = () => {
                   ) : "Sign Up"
                 }
               </Button>
-             
+              <Oauth className='google_btn'/>
             </form>
 
             <div className='flex gap-2 text-sm mt-5 font-semibold ' >

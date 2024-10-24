@@ -28,6 +28,11 @@
     color:rgb(41, 128, 214)
 }
 
+.containers .sign_btn{
+    @apply hover:bg-gradient-to-br from-indigo-600 to-blue-400 py-2 lowercase 
+          hover:text-white font-medium rounded-md
+}
+
 @media (max-width:768px){ 
     .option_container{
         position:absolute;

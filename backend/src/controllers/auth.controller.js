@@ -58,5 +58,37 @@ const signin = async(req,res,next) =>{
    }
 }
 
+const google = async(req,res,next) =>{  //cette fonction va permettre de signin ou signup avec votre compte google que vous allez récupérer
+   const {name, email, googlePhotoUrl} = req.body;
+   try {
+      const user = await User.findOne({email});
+      if(user){
+         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY)
+         const {password, ...rest} = user._doc;
 
-module.exports= {signup, signin};
+         res.status(200).cookie('access_token' , token , {
+           httpOnly:true
+         }).json(rest)
+      }else{
+         const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8); //va géneré un mot de passe qui va contenir des lettres et nombres et on ne prendra que les 8last codes
+         const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+         const newUser = new User({
+            username: name.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4), //en prenant le nom je l'ai mis en miniscule,supprimer les spaces et mis des nombres aléatoires au devant pour le rendre unique
+            email,
+            password : hashedPassword,
+            profilePicture : googlePhotoUrl
+         });
+         await newUser.save();
+         const token = jwt.sign({id : user._id}, process.env.JWT_SECRET_KEY);
+         const {password, ...rest} = newUser._doc;
+
+         res.status(200).cookie('access_token', token , {
+            httpOnly:true
+         }).json(rest);
+      }
+   } catch (error) {
+      next(error)}
+}
+
+module.exports= {signup, signin, google};

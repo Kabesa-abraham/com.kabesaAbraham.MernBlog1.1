@@ -3,6 +3,7 @@ import './Style/sign_in_up.css'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button,CircularProgress } from '@mui/material'
 import { MdError } from "react-icons/md";
+import Oauth from '../Components/oauthgoogle/Oauth';
 
 const SignUp = () => {
 
@@ -95,7 +96,7 @@ const SignUp = () => {
                   ) : "Sign Up"
                 }
               </Button>
-             
+              <Oauth className='google_btn'/>
             </form>
 
             <div className='flex gap-2 text-sm mt-5 font-semibold ' >

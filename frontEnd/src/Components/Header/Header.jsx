@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {FaMoon} from 'react-icons/fa'
 import {MdClose, MdMenu} from 'react-icons/md'
+import { Button } from '@mui/material'
 
 const Header = () => {
 
@@ -20,7 +21,7 @@ const Header = () => {
 
 
   return (
-   <header className='flex justify-between items-center relative p-3 border-b-2'>
+   <header className='flex justify-between items-center relative p-3 border-b-2 containers '>
 
     <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold' >
       <span className='px-2 py-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-500 text-white
@@ -44,11 +45,9 @@ const Header = () => {
       </button>
 
       <Link to='/sign-in' >
-        <button 
-          className='bg-gradient-to-br from-indigo-700 to-blue-400  
-                   text-white font-semibold px-2 py-2 rounded-lg' >
+        <Button variant='outlined' className='sign_btn' >
           Se Connecter
-        </button>
+        </Button>
       </Link>
 
       {

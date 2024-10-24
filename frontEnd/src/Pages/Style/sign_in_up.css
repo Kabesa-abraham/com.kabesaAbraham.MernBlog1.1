@@ -14,3 +14,8 @@
 .theContainer .circularprogress{
     @apply text-white mr-3
 }
+
+.theContainer .google_btn{
+    @apply lowercase mt-4 py-[6px] rounded-md border border-solid border-pink-500
+           hover:bg-gradient-to-t from-orange-500 to-pink-600 hover:text-white
+}
