@@ -33,6 +33,13 @@
           hover:text-white font-medium rounded-md
 }
 
+.containers .profile_btn{
+    @apply w-full font-semibold hover:bg-gray-100 transition-all py-1 rounded-md
+}
+;.containers .sedecon_btn{
+    @apply w-full font-semibold py-1 rounded-md  hover:bg-gradient-to-r from-pink-100 to-red-200 transition-all 
+}
+
 @media (max-width:768px){ 
     .option_container{
         position:absolute;
@@ -47,10 +54,12 @@
         color: white;
         text-align: center;
         transition: .2s all linear;
+        opacity: 100%;
     }
     .option_container.active{
         transition: .2s all linear;
         top:-10em;
+        opacity: 0;
     }
 
 }

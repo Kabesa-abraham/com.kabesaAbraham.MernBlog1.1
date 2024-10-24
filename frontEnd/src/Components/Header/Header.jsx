@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './header.css'
 import { Link } from 'react-router-dom'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {FaMoon} from 'react-icons/fa'
 import {MdClose, MdMenu} from 'react-icons/md'
-import { Button } from '@mui/material'
+import { Button, ButtonBase} from '@mui/material'
+import {useSelector} from 'react-redux'
+import Dropdown from '../dropdown/Dropdown'
+import testProImg from '../../assets/user_1728405613943.jpg'
 
 const Header = () => {
 
@@ -19,9 +22,10 @@ const Header = () => {
   setActive(false)
  }
 
+ const {currentUser} = useSelector(state => state.user)
 
   return (
-   <header className='flex justify-between items-center relative p-3 border-b-2 containers '>
+   <header className='flex justify-between items-center relative py-3 px-[3%] md:px-[6%] border-b-2 containers '>
 
     <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold' >
       <span className='px-2 py-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-500 text-white
@@ -44,12 +48,26 @@ const Header = () => {
         <FaMoon/>
       </button>
 
-      <Link to='/sign-in' >
-        <Button variant='outlined' className='sign_btn' >
-          Se Connecter
-        </Button>
-      </Link>
-
+      {
+        currentUser ? (
+          <Dropdown src={testProImg}>{/*currentUser.profilePicture*/}
+              <span className='block text-md md:text-xl' >@{currentUser.username}</span>
+              <span className='block text-md md:text-xl font-semibold truncate' >@{currentUser.email}</span>
+              <Link to={'/dashboard?tab=profile'}>
+                <ButtonBase className='profile_btn'>Profile</ButtonBase>
+              </Link>
+              <hr />     
+                <ButtonBase className='sedecon_btn'>Se déconnecter</ButtonBase>
+          </Dropdown>
+        ) : 
+        (
+        <Link to='/sign-in' >
+          <Button variant='outlined' className='sign_btn' >
+            Se Connecter
+          </Button>
+        </Link>)
+      }
+      
       {
         active ? <button className='w-11 h-9 flex justify-center items-center md:hidden menu_btn' onClick={HandleShopOption}>
         <MdClose className='text-2xl ' />
