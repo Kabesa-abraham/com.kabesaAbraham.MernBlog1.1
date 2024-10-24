@@ -3,16 +3,24 @@
     top: 115%;
     width: 16em;
     right: 2em;
-    padding:10px 5px;
-    background-color: white;
-    border-radius: 5px;
     box-shadow: 0 .2em .5em rgba( 0,0,0,.2 );
     display: none;
     opacity: 0;
 }
-.infoUserContainer.active{
-    opacity: 100%;
+.infocontainer2{
+    width: 100%;
+    padding:10px 5px;
+    background-color: white;
+    border-radius: 10px 0 10px 10px;
     display: flex;
     flex-direction: column;
     gap: .4em;
+}
+.darkmode{
+    background-color: #060631;
+    color: white;
+}
+.infoUserContainer.active{
+    opacity: 100%;
+    display: flex;
 }

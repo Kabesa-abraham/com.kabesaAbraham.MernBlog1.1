@@ -1,5 +1,5 @@
 .search{
-    border: solid 1.5px transparent ;
+    border: solid 1.5px rgb(209, 209, 209) ;
 }
 .search:hover{
     transition: .1s all linear;
@@ -36,8 +36,11 @@
 .containers .profile_btn{
     @apply w-full font-semibold hover:bg-gray-100 transition-all py-1 rounded-md
 }
-;.containers .sedecon_btn{
+.containers .sedecon_btn{
     @apply w-full font-semibold py-1 rounded-md  hover:bg-gradient-to-r from-pink-100 to-red-200 transition-all 
+}
+.buttondark:hover{
+    color:black
 }
 
 @media (max-width:768px){ 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import './dropdown.css'
+import { useSelector } from 'react-redux'
 
 const Dropdown = (props) => {
+
+  const {theme} = useSelector(state => state.theme)
 
   const [showOption,setShowOption] = useState(false)
   const handleshow = () =>{
@@ -21,7 +24,9 @@ const Dropdown = (props) => {
 
       <div className={showOption===false? 'infoUserContainer' : 'infoUserContainer active' } 
            onClick={handleshow} >
+        <div className={theme==='light'?'infocontainer2':'infocontainer2 darkmode' } >
         {props.children}
+        </div>
       </div>
     </div>
   )
