@@ -7,6 +7,7 @@ import Projects from './Pages/Projects';
 import Dashboard from './Pages/Dashboard';
 import Header from './Components/Header/Header';
 import Footer from './Components/footer/Footer';
+import PrivateRoute from './Components/privateRoute/PrivateRoute';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
       <Route path='/sign-in' element={<SignIn/>} />
       <Route path='/sign-up' element={<SignUp/>} />
       <Route path='/projects' element={<Projects/>} />
-      <Route path='/dashboard' element={<Dashboard/>} />
+      <Route element={<PrivateRoute/>} > {/*va me permettre de mettre ce composant privé */}
+        <Route path='/dashboard' element={<Dashboard/>} />
+      </Route>
     </Routes>
        <Footer/>
    </BrowserRouter>
