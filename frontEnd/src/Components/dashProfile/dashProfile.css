@@ -1,0 +1,8 @@
+.inputDashPro{
+    @apply bg-[#cdcbcb36] px-4 py-2 rounded-lg outline-none shadow-md border border-transparent 
+           hover:border-[#794848] transition-all
+}
+.dashproContainer .updateButton{
+    @apply lowercase bg-gradient-to-b from-indigo-600 from-20% to-blue-500 text-white 
+          shadow-md rounded-lg hover:bg-gradient-to-t
+}

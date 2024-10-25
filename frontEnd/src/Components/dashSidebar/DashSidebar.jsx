@@ -16,7 +16,7 @@ const DashSidebar = () => {
   },[location.search])
 
   return (
-    <div className='bg-[#ffffff0f] px-4 py-3 border-r border-r-[#66606048] h-full ' >
+    <div className='bg-[#ffffff0f] px-4 py-3 border-b border-[#66606048] md:border-r  h-full ' >
       <div className='flex justify-around md:flex-col md:gap-2' >
          <Link to='/dashboard?tab=profile' >
             <div className={tab==='profile'? 'profile_btn activer' : 'profile_btn'} > 
