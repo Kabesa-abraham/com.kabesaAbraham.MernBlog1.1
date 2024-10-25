@@ -20,7 +20,7 @@ function App() {
       <Route path='/sign-up' element={<SignUp/>} />
       <Route path='/projects' element={<Projects/>} />
       <Route element={<PrivateRoute/>} > {/*va me permettre de mettre ce composant privé */}
-        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/dashboard' element={<Dashboard/>} /> {/*ce ci est sont enfant */}
       </Route>
     </Routes>
        <Footer/>

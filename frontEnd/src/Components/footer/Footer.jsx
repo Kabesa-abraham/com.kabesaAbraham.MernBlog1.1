@@ -6,7 +6,7 @@ import {BsFacebook,BsInstagram,BsTwitter ,BsGithub} from 'react-icons/bs'
 
 const Footer = () => {
   return (
-    <footer className='border border-t-4 border-t-pink-500 rounded-md py-10 px-4' >
+    <footer className='bg-[#ffffff0f] border border-t-4 border-t-pink-500 rounded-md py-10 px-4' >
       <div className='w-full max-w-7xl mx-auto' >
         <div className='grid w-full justify-between sm:flex md:grid-cols-1' >
             <div className='mt-2' >

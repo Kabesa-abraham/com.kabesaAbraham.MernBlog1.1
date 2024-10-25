@@ -29,7 +29,7 @@ const Header = () => {
  const {theme} = useSelector(state => state.theme)
 
   return (
-   <header className='flex justify-between items-center relative py-3 px-[3%] md:px-[6%] border-b-2 containers'>
+   <header className='bg-[#ffffff0f] flex justify-between items-center relative py-3 px-[3%] md:px-[6%] border-b-2 containers'>
 
     <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold' >
       <span className='px-2 py-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-500 text-white
@@ -38,11 +38,12 @@ const Header = () => {
     </Link>
 
     <form 
-      className='bg-transparent px-4 py-3 rounded-lg hidden lg:flex items-center search'
+      className='bg-[#cdcbcb2a] px-4 py-3 rounded-lg hidden lg:flex items-center search'
      >
       <input type='text' placeholder='Rechercher...' className='bg-transparent border-none outline-none'/>
       <AiOutlineSearch className='text-xl' />
     </form>
+
     <button className='w-12 h-10 flex justify-center items-center lg:hidden text-lg search_btn2' >
       <AiOutlineSearch/>
     </button>
