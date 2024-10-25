@@ -29,7 +29,7 @@ const DashProfile = () => {
    //pour cette fonction on aura besoin des services que propose firebase pour upload l'image qu'on aura
    //et du module firebase pour faire tout ça
    //qui va ainsi nous permettre de le mettre dans la BBD 
-   console.log("image doesn't upload we need firebase")  
+   console.log("image doesn't upload we need firebase LA FONCTIONNALITE D'UPLOAD IMAGE PAS ENCORE FAITE!!! ")
   }
 
   return (
