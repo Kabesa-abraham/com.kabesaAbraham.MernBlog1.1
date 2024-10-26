@@ -9,6 +9,7 @@ import Dropdown from '../dropdown/Dropdown';
 import testProImg from '../../assets/user_1728405613943.jpg';
 import {useSelector,useDispatch} from 'react-redux';
 import { toggleTheme } from '../../redux/theme/themeSlice';
+import { signOutSuccess } from '../../redux/user/userSlice';
 
 
 const Header = () => {
@@ -27,6 +28,21 @@ const Header = () => {
  const {currentUser} = useSelector(state => state.user)
  const dispatch = useDispatch();
  const {theme} = useSelector(state => state.theme)
+
+ const handleSignOut = async() =>{ //Pour que le user se déconnecte
+  try {
+    const res = await fetch('/backend/user/signOut' , {
+      method:'POST'
+    })
+    const data = await res.json();
+
+    if(!res.ok){
+      console.log(data.message)
+    }else{
+      dispatch(signOutSuccess())
+    }
+  } catch (error) { console.log(error.message)}
+}
 
   return (
    <header className='bg-[#ffffff0f] flex justify-between items-center relative py-3 px-[3%] md:px-[6%] border-b-2 containers'>
@@ -63,7 +79,7 @@ const Header = () => {
                 <ButtonBase className={theme==='light'? 'profile_btn':'profile_btn buttondark'}>Profile</ButtonBase>
               </Link>
               <hr />     
-                <ButtonBase className={theme==='light'? 'sedecon_btn':'sedecon_btn buttondark'}>Se déconnecter</ButtonBase>
+                <ButtonBase className={theme==='light'? 'sedecon_btn':'sedecon_btn buttondark'} onClick={handleSignOut}>Se déconnecter</ButtonBase>
           </Dropdown>
         ) : 
         (

@@ -4,7 +4,8 @@ import imgprofileForTest from '../../assets/user_1728405613943.jpg'
 import { useSelector } from 'react-redux'
 import { Alert, Button, } from '@mui/material'
 import { updateStart,updateFaillure,updateSuccess,
-         deleteUserFaillure,deleteUserStart,deleteUserSuccess
+         deleteUserFaillure,deleteUserStart,deleteUserSuccess,
+         signOutSuccess
         } from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { MdError } from 'react-icons/md'
@@ -99,9 +100,7 @@ const DashProfile = () => {
       } catch (error) {
         dispatch(deleteUserFaillure(error.message))}  
   }
-
-  //const [showModal,setShowModal] = useState(false);
-  const mySwalAlert1 = ()=>{
+  const mySwalAlert1 = ()=>{  //le popup qui va s'afficher lorsque on declenchera le bouton de suppression du user
     Swal.fire({
       icon: "warning",
       position:'center',
@@ -110,18 +109,28 @@ const DashProfile = () => {
       showCancelButton:true, 
       cancelButtonText:'Annuler',
       confirmButtonText:'Oui, je suis sûr',
-      /*customClass:{ //pour mettre mes css dans mes boutons
-        confirmButton: 'Tbtn btn_ok',
-        cancelButton:'Tbtn btn_annuler'
-      }*/
     }).then((res) =>{
       if(res.isConfirmed){
         handleDeleteUser();
       }
     })
   }
-     
 
+  const handleSignOut = async() =>{ //Pour que le user se déconnecte
+    try {
+      const res = await fetch('/backend/user/signOut' , {
+        method:'POST'
+      })
+      const data = await res.json();
+
+      if(!res.ok){
+        console.log(data.message)
+      }else{
+        dispatch(signOutSuccess())
+      }
+    } catch (error) { console.log(error.message)}
+  }
+     
   return (
     <div className='w-[80%] mx-auto p-3 md:px-[7%] lg:px-[20%] dashproContainer' >
        <h1 className='my-7 text-center font-semibold text-3xl' >Mon Profile</h1>
@@ -157,7 +166,7 @@ const DashProfile = () => {
 
           <div className='text-red-500 flex justify-between mt-5' >
             <span className='cursor-pointer' onClick={()=>mySwalAlert1()} >Supprimer Compte</span>
-            <span className='cursor-pointer text-pink-500' >Se Déconnecter</span>
+            <span className='cursor-pointer text-pink-500' onClick={handleSignOut}>Se Déconnecter</span>
           </div>
        </form>
        {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './dashSidebar.css'
 import {HiUser,HiArrowSmRight} from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signOutSuccess } from '../../redux/user/userSlice';
 
 const DashSidebar = () => {
 
@@ -14,6 +16,22 @@ const DashSidebar = () => {
       setTab(tabFromUrl)
     }
   },[location.search])
+
+  const dispatch = useDispatch();
+  const handleSignOut = async() =>{ //Pour que le user se déconnecte
+    try {
+      const res = await fetch('/backend/user/signOut' , {
+        method:'POST'
+      })
+      const data = await res.json();
+
+      if(!res.ok){
+        console.log(data.message)
+      }else{
+        dispatch(signOutSuccess())
+      }
+    } catch (error) { console.log(error.message)}
+  }
 
   return (
     <div className='bg-[#ffffff0f] px-4 py-3 border-b border-[#66606048] md:border-r  h-full ' >
@@ -28,7 +46,7 @@ const DashSidebar = () => {
             </div>
           </Link>
 
-          <div className='deconnect_btn'>
+          <div className='deconnect_btn' onClick={handleSignOut}>
             <HiArrowSmRight className='text-lg md:text-2xl'/>
             <p>Se Déconnecter</p>
           </div>
