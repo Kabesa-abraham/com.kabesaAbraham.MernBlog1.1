@@ -34,7 +34,6 @@ const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour l
    }
 
    try {
-
     const updateUser = await User.findByIdAndUpdate(req.params.userId , {
         //$set:req.body faire ça n'est pas une bonne idée
         $set:{
@@ -45,7 +44,7 @@ const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour l
         }},
         {new : true});
         const {password , ...rest} = updateUser._doc;
-        res.status(200).json({rest})
+        res.status(200).json(rest)
    } catch (error) { next(error)}
     
 } 

@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import './dashProfile.css'
 import imgprofileForTest from '../../assets/user_1728405613943.jpg'
 import { useSelector } from 'react-redux'
-import { Button } from '@mui/material'
+import { Alert, Button } from '@mui/material'
+import { updateStart,updateFaillure,updateSuccess } from '../../redux/user/userSlice'
+import { useDispatch } from 'react-redux'
+import { MdError } from 'react-icons/md'
 
 const DashProfile = () => {
 
@@ -22,20 +25,62 @@ const DashProfile = () => {
 
   useEffect(() =>{
     if(uploadImage){
-      uploadTheImage()
+      uploadTheImageViaFirebase()
     }
   },[imageUrl]) //donc ce useEffect va s'éxecuter si il ya un changement de cette état imageUrl
-  const uploadTheImage = async() =>{
+  const uploadTheImageViaFirebase = async() =>{
    //pour cette fonction on aura besoin des services que propose firebase pour upload l'image qu'on aura
    //et du module firebase pour faire tout ça
    //qui va ainsi nous permettre de le mettre dans la BBD 
    console.log("image doesn't upload we need firebase LA FONCTIONNALITE D'UPLOAD IMAGE PAS ENCORE FAITE!!! ")
   }
 
+  const [formdata,setFormdata] = useState({})
+  const [updateUserSuccess , setUpdateUserSuccess] = useState(null)
+  const [updateUserError , setUpdateUserError] = useState(null)
+  const dispatch = useDispatch();
+
+  const handleChangeForm = (e) =>{
+    setFormdata({...formdata, [e.target.id] : e.target.value})
+  }
+
+  const handleUpdateUser = async(e) =>{
+    e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+
+    if(Object.keys(formdata).length === 0){ //donc si il n'ya rien dans formdata
+      setUpdateUserError("Aucun changement n'a été fait")
+      return;
+    }
+    try {
+      dispatch(updateStart());
+
+      const res = await fetch(`/backend/user/update/${currentUser._id}`,{//j'envois l'_id du user que j'ai fait persister grâce à redux-persist
+        method:'PUT',
+        headers:{'Content-Type': 'application/json'},
+        body:JSON.stringify(formdata)
+      })
+
+      const data = await res.json();
+      if(!res.ok){
+        dispatch(updateFaillure(data.message))
+        setUpdateUserError(data.message)
+      }else{
+        dispatch(updateSuccess(data))
+        setUpdateUserSuccess('Profile Utilisateur mise à jour avec succée!')
+      }
+      
+    } catch (error) {
+      dispatch(updateFaillure(error.message))
+      setUpdateUserError(error.message)
+    }
+}
+
   return (
     <div className='w-[80%] mx-auto p-3 md:px-[7%] lg:px-[20%] dashproContainer' >
        <h1 className='my-7 text-center font-semibold text-3xl' >Mon Profile</h1>
-       <form className='flex flex-col gap-5' >
+       <form className='flex flex-col gap-5' onSubmit={handleUpdateUser} >
 
          <input type="file" accept='image/*' onChange={handleChangeImge} ref={filepickImg} hidden/>
          <div className='w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full' onClick={()=>filepickImg.current.click()} >
@@ -47,15 +92,18 @@ const DashProfile = () => {
                  placeholder='nom utilisateur' 
                  defaultValue={currentUser.username} 
                  className='inputDashPro'
+                 onChange={handleChangeForm}
           />
           <input type="email" id='email' 
                  placeholder='exemple@gmail.com' 
                  defaultValue={currentUser.email}
                  className='inputDashPro'
+                 onChange={handleChangeForm}
           />
           <input type="password" id='password' 
                  placeholder='mot de passe' 
                  className='inputDashPro'
+                 onChange={handleChangeForm}
           />
 
           <Button type='submit' className='updateButton'  >
@@ -67,6 +115,18 @@ const DashProfile = () => {
             <span className='cursor-pointer text-pink-500' >Se Déconnecter</span>
           </div>
        </form>
+       {
+        updateUserSuccess &&
+        <Alert className='mt-5' color='success' >
+          {updateUserSuccess}
+        </Alert>
+       }
+       {
+        updateUserError &&
+        <Alert className='mt-5' color='error' icon={<MdError/>} >
+          {updateUserError}
+        </Alert>
+       }
     </div>
   )
 }
