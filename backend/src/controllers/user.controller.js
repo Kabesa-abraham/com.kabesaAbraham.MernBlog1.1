@@ -49,4 +49,16 @@ const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour l
     
 } 
 
-module.exports= {test,updateUser};
+const deleteUser = async(req,res,next) =>{
+    if(req.user.id !== req.params.userId){
+        return next(errorHandler(403, "Vous n'êtes pas permis à supprimer ce compte"))
+    }
+
+    try {
+        await User.findByIdAndDelete(req.params.userId);
+        res.status(200).json('Utilisateur a été supprimer avec succée')
+    } catch (error) { next(error) }
+
+}
+
+module.exports= {test,updateUser,deleteUser};
