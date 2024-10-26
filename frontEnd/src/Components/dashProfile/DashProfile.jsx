@@ -2,18 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import './dashProfile.css'
 import imgprofileForTest from '../../assets/user_1728405613943.jpg'
 import { useSelector } from 'react-redux'
-import { Alert, Button, } from '@mui/material'
+import { Alert, Button, CircularProgress, } from '@mui/material'
 import { updateStart,updateFaillure,updateSuccess,
          deleteUserFaillure,deleteUserStart,deleteUserSuccess,
          signOutSuccess
         } from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { MdError } from 'react-icons/md'
+import {Link} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const DashProfile = () => { 
 
-  const {currentUser,error} = useSelector(state => state.user); // pour prendre les info du user en sachant que celle-ci est persistant
+  const {currentUser,error,loading} = useSelector(state => state.user); // pour prendre les info du user en sachant que celle-ci est persistant
   
   //pour l'image
   const [uploadImage,setUploadImage] = useState(null)
@@ -160,9 +161,24 @@ const DashProfile = () => {
                  onChange={handleChangeForm}
           />
 
-          <Button type='submit' className='updateButton'  >
-            Mettre à jour
+          <Button type='submit' className='updateButton' disabled={loading} > {/*on va aussi faire le disabled pour quand l'image s'upload */}
+            { loading ? (
+              <>
+                <CircularProgress size={25} className='circularprogress'/>
+                <span className='lowercase text-sm text-white' >En attente...</span>
+              </>
+              ) : " Mettre à jour"
+            }
           </Button>
+
+          { //ce bouton s'afficher seulement si on est un administrateur
+             currentUser.isAdmin=== true && (
+             <Link to={'/create-post'}>
+              <Button type='button' className='postbutton' >
+                Créer un Poste
+              </Button>
+             </Link> )
+          }
 
           <div className='text-red-500 flex justify-between mt-5' >
             <span className='cursor-pointer' onClick={()=>mySwalAlert1()} >Supprimer Compte</span>

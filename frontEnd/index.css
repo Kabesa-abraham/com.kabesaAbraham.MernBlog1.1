@@ -5,3 +5,11 @@
 *{
     scrollbar-width:thin;
 }
+
+body{
+    height: 100vh;
+}
+
+.ql-editor{ /*POUR REACT-QUIL*/
+    font-size: 1.05em;
+}

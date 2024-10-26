@@ -1,0 +1,19 @@
+.categorie option{
+    @apply text-black
+}
+.containerImg_select .upload_btn{
+    @apply lowercase bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-1 py-2  md:px-3
+           rounded-lg hover:ring-4 ring-pink-300 transition-all
+}
+.containerImg_select .input_file{
+    @apply max-w-[80%] text-[15px]
+}
+
+.containerImg_select .input_file .whiter{
+    @apply text-white
+}
+
+.postContainer .publish_btn{
+    @apply bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white 
+           hover:ring-4 ring-purple-300 transition-all
+}

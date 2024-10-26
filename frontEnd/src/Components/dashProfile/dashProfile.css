@@ -6,3 +6,8 @@
     @apply lowercase bg-gradient-to-b from-indigo-600 from-20% to-blue-500 text-white 
           shadow-md rounded-lg hover:bg-gradient-to-t
 }
+
+.dashproContainer .postbutton{
+    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 lowercase text-white rounded-lg w-full
+           hover:ring-4 ring-pink-200 transition-all
+}
