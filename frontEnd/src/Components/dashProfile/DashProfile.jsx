@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import './dashProfile.css'
 import imgprofileForTest from '../../assets/user_1728405613943.jpg'
 import { useSelector } from 'react-redux'
-import { Alert, Button } from '@mui/material'
-import { updateStart,updateFaillure,updateSuccess } from '../../redux/user/userSlice'
+import { Alert, Button, } from '@mui/material'
+import { updateStart,updateFaillure,updateSuccess,
+         deleteUserFaillure,deleteUserStart,deleteUserSuccess
+        } from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { MdError } from 'react-icons/md'
+import Swal from 'sweetalert2'
 
-const DashProfile = () => {
+const DashProfile = () => { 
 
-  const {currentUser} = useSelector(state => state.user); // pour prendre les info du user en sachant que celle-ci est persistant
+  const {currentUser,error} = useSelector(state => state.user); // pour prendre les info du user en sachant que celle-ci est persistant
   
   //pour l'image
   const [uploadImage,setUploadImage] = useState(null)
@@ -44,7 +47,7 @@ const DashProfile = () => {
     setFormdata({...formdata, [e.target.id] : e.target.value})
   }
 
-  const handleUpdateUser = async(e) =>{
+  const handleUpdateUser = async(e) =>{  //fonction pour mettre à jour un user
     e.preventDefault();
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
@@ -75,7 +78,49 @@ const DashProfile = () => {
       dispatch(updateFaillure(error.message))
       setUpdateUserError(error.message)
     }
-}
+  }
+
+
+  const handleDeleteUser = async() =>{
+      try {
+        dispatch(deleteUserStart())
+
+        const res = await fetch(`/backend/user/delete/${currentUser._id}`,{
+          method:'DELETE'
+        })
+        const data = await res.json();
+
+        if(!res.ok){
+          dispatch(deleteUserFaillure(data.message))
+        }else{
+          dispatch(deleteUserSuccess(data))
+        }
+        
+      } catch (error) {
+        dispatch(deleteUserFaillure(error.message))}  
+  }
+
+  //const [showModal,setShowModal] = useState(false);
+  const mySwalAlert1 = ()=>{
+    Swal.fire({
+      icon: "warning",
+      position:'center',
+      text:"Est-vous sûr de vouloir supprimer ce Compte ?",
+      toast:true,
+      showCancelButton:true, 
+      cancelButtonText:'Annuler',
+      confirmButtonText:'Oui, je suis sûr',
+      /*customClass:{ //pour mettre mes css dans mes boutons
+        confirmButton: 'Tbtn btn_ok',
+        cancelButton:'Tbtn btn_annuler'
+      }*/
+    }).then((res) =>{
+      if(res.isConfirmed){
+        handleDeleteUser();
+      }
+    })
+  }
+     
 
   return (
     <div className='w-[80%] mx-auto p-3 md:px-[7%] lg:px-[20%] dashproContainer' >
@@ -111,7 +156,7 @@ const DashProfile = () => {
           </Button>
 
           <div className='text-red-500 flex justify-between mt-5' >
-            <span className='cursor-pointer' >Supprimer Compte</span>
+            <span className='cursor-pointer' onClick={()=>mySwalAlert1()} >Supprimer Compte</span>
             <span className='cursor-pointer text-pink-500' >Se Déconnecter</span>
           </div>
        </form>
@@ -127,6 +172,13 @@ const DashProfile = () => {
           {updateUserError}
         </Alert>
        }
+        {
+        error &&
+        <Alert className='mt-5' color='error' icon={<MdError/>} >
+          {error}
+        </Alert>
+       }
+
     </div>
   )
 }
