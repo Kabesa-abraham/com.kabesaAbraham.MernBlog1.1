@@ -45,7 +45,7 @@ const signin = async(req,res,next) =>{
         return next(errorHandler(400 , "Invalid password"))
       }
 
-      const token = jwt.sign( {id:validUser._id}, process.env.JWT_SECRET_KEY)
+      const token = jwt.sign( {id:validUser._id , isAdmin:validUser.isAdmin}, process.env.JWT_SECRET_KEY)  //dans ce token j'ai aussi ajouter isAdmin
 
       const {password: pass , ...rest} = validUser._doc; //j'ai mis ça pour que ça déselectionne le password je veux pas qu'on l'affiche
 
@@ -63,7 +63,7 @@ const google = async(req,res,next) =>{  //cette fonction va permettre de signin 
    try {
       const user = await User.findOne({email});
       if(user){
-         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY)
+         const token = jwt.sign({id: user._id ,isAdmin : user.isAdmin}, process.env.JWT_SECRET_KEY)
          const {password, ...rest} = user._doc;
 
          res.status(200).cookie('access_token' , token , {
@@ -80,7 +80,7 @@ const google = async(req,res,next) =>{  //cette fonction va permettre de signin 
             profilePicture : googlePhotoUrl
          });
          await newUser.save();
-         const token = jwt.sign({id : user._id}, process.env.JWT_SECRET_KEY);
+         const token = jwt.sign({id : user._id , isAdmin:newUser.isAdmin}, process.env.JWT_SECRET_KEY);
          const {password, ...rest} = newUser._doc;
 
          res.status(200).cookie('access_token', token , {

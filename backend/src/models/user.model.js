@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
     profilePicture:{
         type:String,
         default:''
-    }
+    },
+    isAdmin: { //pour l'administrateur
+        type:Boolean,
+        default:false
+    },
 }, {timestamps: true} //nous avons mis ça pour que ça sauvegarde automatique le temps de création du user et du mise à jour
 );
 
