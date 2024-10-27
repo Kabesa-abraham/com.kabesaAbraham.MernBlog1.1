@@ -1,7 +1,7 @@
 .profile_btn{
     @apply flex justify-between gap-5 md:gap-0 px-4 py-3 rounded-md cursor-pointer hover:bg-[#afacac3b]  transition-all
 }
-.deconnect_btn{
+.side_btn{
     @apply flex gap-2 items-center px-4 py-3 rounded-md cursor-pointer text-[15px] md:text-lg font-semibold hover:bg-[#afacac3b]  transition-all
 }
 .activer{

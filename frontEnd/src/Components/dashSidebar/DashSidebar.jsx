@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './dashSidebar.css'
-import {HiUser,HiArrowSmRight} from 'react-icons/hi'
+import {HiUser,HiArrowSmRight, HiDocumentReport} from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutSuccess } from '../../redux/user/userSlice';
+import { useSelector } from 'react-redux';
 
 const DashSidebar = () => {
 
@@ -33,6 +34,8 @@ const DashSidebar = () => {
     } catch (error) { console.log(error.message)}
   }
 
+  const {currentUser} = useSelector(state =>state.user)
+
   return (
     <div className='bg-[#ffffff0f] px-4 py-3 border-b border-[#66606048] md:border-r  h-full ' >
       <div className='flex justify-around md:flex-col md:gap-2' >
@@ -42,11 +45,25 @@ const DashSidebar = () => {
                 <HiUser/>
                 <p>Profile</p>
               </span>
-              <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2' >Utilisateur</p>
+              <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2' >
+                {
+                  currentUser.isAdmin? "Admin" : "Utilisateur"
+                }
+              </p>
             </div>
           </Link>
 
-          <div className='deconnect_btn' onClick={handleSignOut}>
+          {
+            currentUser.isAdmin &&
+            <Link to={`/dashboard?tab=posts`} >
+            <div className={`side_btn ${tab==='posts'&& 'activer'}`} >
+              <HiDocumentReport />
+              <p>postes</p>
+            </div>
+          </Link>
+          }
+
+          <div className='side_btn' onClick={handleSignOut}>
             <HiArrowSmRight className='text-lg md:text-2xl'/>
             <p>Se Déconnecter</p>
           </div>
