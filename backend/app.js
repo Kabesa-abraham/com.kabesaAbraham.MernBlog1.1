@@ -3,7 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose')
 const userRoute = require('./src/routes/user.route.js')
 const authRoute = require('./src/routes/auth.route.js')
-const postRoute = require('./src/routes/post.route')
+const postRoute = require('./src/routes/post.route.js')
 const cookieParser = require('cookie-parser')  //va nous permettre d'extraire des cookies dans le navigateur du user sans aucun problème
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log('MongoDB connected!')})
