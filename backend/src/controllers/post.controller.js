@@ -30,7 +30,7 @@ const getPosts = async(req,res,next) =>{
     //Donc on va utilisé le systeme de requêtes pour pouvoir prendre les infos que vous voulons 
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
-        const limit = parseInt(req.query.limit) || 9;
+        const limit = parseInt(req.query.limit) || 9; //donc il ya dejà une limite préetablie
         const sortDirection = req.query.order === 'asc' ? 1 : -1;
 
         const posts = await Post.find({ //on peut trouver des postes à partir des diffentes moyens grâce aux requêtes

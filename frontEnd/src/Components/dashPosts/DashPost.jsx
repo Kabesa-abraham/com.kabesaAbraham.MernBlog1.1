@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './dashPost.css'
 import {useSelector} from 'react-redux'
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { AiOutlineDelete,AiOutlineEdit } from "react-icons/ai";
 import { Link } from 'react-router-dom'
 import imgForReplacePostImg from '../../assets/img2.jpg'
@@ -14,8 +14,9 @@ const DashPost = () => {
   const {theme} = useSelector(state => state.theme);
  
   const [userPosts, setUserPosts] = useState([])
-  useEffect(() =>{
+  const [showMore,setShowMore] = useState(true) //pour afficher ou pas le bouton 'voir Plus'
 
+  useEffect(() =>{
     const fetchPost = async() =>{
       try { 
         const res = await fetch(`/backend/post/getPosts?userId=${currentUser._id}`)
@@ -23,6 +24,9 @@ const DashPost = () => {
       
         if(res.ok){
           setUserPosts(data.posts); //car dans notre data on aura posts, totalPosts, lastMonthPosts
+          if(data.posts.length < 9){
+            setShowMore(false)
+          }
         }
 
       } catch (error) {
@@ -31,9 +35,27 @@ const DashPost = () => {
     }
 
     if(currentUser.isAdmin){
-      fetchPost()
-    }
+      fetchPost() }
   },[currentUser._id])//ceci se fera seulement si le currentUser._id change
+
+
+  const handleShowMore = async() =>{
+     const startIndex = userPosts.length; //je renvoi la taille actuelle du userPosts qui doit normalement être à 9
+     try {
+      const res = await fetch(`/backend/post/getPosts?userId=${currentUser._id}&startIndex=${startIndex}`);
+      const data = await res.json();
+
+      if(res.ok){
+        setUserPosts((prev)=>[...prev , ...data.posts]) //donc je renvoi les postes qui étaient précédemment et j'y met ceux qui on été fetch
+        if(data.posts.length < 9){ // si le data.posts.length actuel est < 9 alors on cache le bouton 'voir plus'
+          setShowMore(false)
+        }
+      }
+
+     } catch (error) {
+      console.log(error);
+     }
+  }
 
   return (
     <div
@@ -67,7 +89,7 @@ const DashPost = () => {
                         </Link>
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className='min-w-[30em]'>
                         <Link to={`/post/${post.slug}`} className={`font-medium ${theme==='dark'&&'darkModeTitle'}`} >{post.title}</Link>
                       </TableCell>
 
@@ -89,6 +111,13 @@ const DashPost = () => {
                 ))
               }
             </Table>
+            {
+              showMore &&(
+                <Button className='voirPlus_btn' onClick={handleShowMore}>
+                  Voir Plus
+                </Button>
+              )
+            }
           </>
         ) 
         : (
