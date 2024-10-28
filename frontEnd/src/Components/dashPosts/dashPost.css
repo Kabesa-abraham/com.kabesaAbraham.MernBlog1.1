@@ -1,0 +1,16 @@
+.tableContainer .atable{
+    @apply shadow-md
+}
+.tableContainer .postImg{
+    @apply w-20 h-10 object-cover bg-gray-500
+}
+
+.tableContainer .darkModeTitle{
+    color: white;
+}
+.tableContainer .darkMode{
+    color: rgba(255, 255, 255, 0.672);
+}
+.tableContainer .darkModeRow{
+    @apply border-2 border-gray-700 hover:bg-[#cdcbcb4c]
+}
