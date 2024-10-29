@@ -55,6 +55,40 @@ const DashUser = () => {
      }
   }
 
+  const handleDeleteUser = async(userId) =>{
+    try {
+      const res = await fetch(`/backend/user/delete/${userId}`,{
+        method:'DELETE'
+      })
+      const data = await res.json();
+
+      if(!res.ok){
+        console.log(data.message);
+      }
+      if(res.ok){
+        setUsers((prev) => prev.filter((user) => user._id !== userId))
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const mySwalAlert3 = (userId) =>{
+    Swal.fire({
+      icon:'warning',
+      position:'center',
+      text:'Etes-vous sûr de vouloir supprimer cette utilisateur?',
+      showCancelButton:true,
+      cancelButtonText:'Non, annuler',
+      cancelButtonColor:'red',
+      confirmButtonText:'Oui, je suis sûr',
+    }).then((res)=>{
+      if(res.isConfirmed){
+        handleDeleteUser(userId);
+      }
+    })
+  }
+
   return (
     <div
      className='table-auto overflow-x-scroll md:mx-auto p-3 tableContaineruser'

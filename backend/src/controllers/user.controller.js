@@ -50,7 +50,7 @@ const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour l
 } 
 
 const deleteUser = async(req,res,next) =>{
-    if(req.user.id !== req.params.userId){
+    if(!req.user.isAdmin && req.user.id !== req.params.userId){
         return next(errorHandler(403, "Vous n'êtes pas permis à supprimer ce compte"))
     }
 
