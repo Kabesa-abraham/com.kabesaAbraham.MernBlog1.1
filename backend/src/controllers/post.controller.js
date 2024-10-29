@@ -70,4 +70,17 @@ const getPosts = async(req,res,next) =>{
     }
 }
 
-module.exports = {createPoste,getPosts}
+const deletePost = async(req,res,next) =>{
+    if(!req.user.isAdmin || req.user.id !== req.params.userId){
+        return next(errorHandler(403 , "Vous n'êtes pas autorisé de supprimer une Poste"))
+    }
+
+    try {
+        await Post.findByIdAndDelete(req.params.postId);
+        res.status(200).json('La Post a été supprimé avec succées');
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {createPoste,getPosts,deletePost}

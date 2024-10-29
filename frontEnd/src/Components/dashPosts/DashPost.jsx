@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './dashPost.css'
 import {useSelector} from 'react-redux'
-import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Alert, Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { AiOutlineDelete,AiOutlineEdit } from "react-icons/ai";
 import { Link } from 'react-router-dom'
 import imgForReplacePostImg from '../../assets/img2.jpg'
 import { titleForPostTab } from '../../assets/text';
+import Swal from 'sweetalert2';
+import { FaBoxOpen, FaQuestion } from 'react-icons/fa';
 
 
 const DashPost = () => {
@@ -28,7 +30,6 @@ const DashPost = () => {
             setShowMore(false)
           }
         }
-
       } catch (error) {
         console.log(error.message);
       }
@@ -37,7 +38,6 @@ const DashPost = () => {
     if(currentUser.isAdmin){
       fetchPost() }
   },[currentUser._id])//ceci se fera seulement si le currentUser._id change
-
 
   const handleShowMore = async() =>{
      const startIndex = userPosts.length; //je renvoi la taille actuelle du userPosts qui doit normalement être à 9
@@ -57,6 +57,40 @@ const DashPost = () => {
      }
   }
 
+  const handleDeletePost = async(postId)=>{ //pour supprimer un poste  il ya un blème
+    try {
+      const res = await fetch(`/backend/post/deletePost/${postId}/${currentUser._id}`,{
+        method:'DELETE',
+      })
+      const data = await res.json();
+
+      if(!res.ok){
+        console.log(data.message)
+      }else{
+        setUserPosts((prev)=> 
+          prev.filter((post) => post._id !== postId) //donc on ne prend que les post donc _id ne pas égal à celle qu'on vient de supprimer
+        )
+      }
+    } catch (error) {
+      console.log(error); 
+    }
+  }
+  const mySwalAlert2 = (postId)=>{  //le popup qui va s'afficher lorsque on declenchera le bouton de suppression du user
+    Swal.fire({
+      icon: "warning",
+      position:'center',
+      text:"Est-vous sûr de vouloir supprimer cette Poste ?",
+      //toast:true,
+      showCancelButton:true, 
+      cancelButtonText:'Annuler',
+      confirmButtonText:'Oui, je suis sûr',
+    }).then((res) =>{
+      if(res.isConfirmed){
+        handleDeletePost(postId);
+      }
+    })
+  }
+
   return (
     <div
      className='table-auto overflow-x-scroll md:mx-auto p-3 tableContainer'
@@ -66,14 +100,14 @@ const DashPost = () => {
           <>
             <Table className='atable'>
               <TableHead className={`bg-[#cdcbcb36] ${theme==='dark'&& 'darkModeRow'}`} >
-                { titleForPostTab.map((descrip) =>(
-                  <TableCell className={`${theme==='dark'&&'darkMode'}`}>{descrip}</TableCell>
+                { titleForPostTab.map((descrip,i) =>(
+                  <TableCell key={i} className={`${theme==='dark'&&'darkMode'}`}>{descrip}</TableCell>
                 ))}
               </TableHead>
 
               {
-                userPosts.map((post) =>(
-                  <TableBody className='divide-y' >
+                userPosts.map((post,i) =>(
+                  <TableBody key={i} className='divide-y' >
                     <TableRow className={`bg-[#cdcbcb2d] hover:bg-[#cdcbcb63] transition-all  ${theme==='dark'&& 'darkModeRow'}`} >
                       <TableCell className={`${theme==='dark'&&'darkMode'}`} >
                          {new Date(post.updatedAt).toLocaleDateString()}
@@ -96,7 +130,9 @@ const DashPost = () => {
                       <TableCell className={`${theme==='dark'&&'darkMode'}`} >{post.category}</TableCell>
 
                       <TableCell>
-                        <span className='text-xl text-red-500 hover:text-red-700 w-full cursor-pointer' >
+                        <span className='text-xl text-red-500 hover:text-red-700 w-full cursor-pointer' 
+                              onClick={()=>{ mySwalAlert2(post._id) }}
+                        >
                           <AiOutlineDelete/>
                         </span>
                       </TableCell>
@@ -121,7 +157,10 @@ const DashPost = () => {
           </>
         ) 
         : (
-          <p>Vous n'avez pas des Postes</p>
+          <p className='h-full flex flex-col items-center justify-center opacity-50'>
+            <FaQuestion className='text-[1.5em] sm:text-[2.5em] lg:text-[5em] '/>
+            <FaBoxOpen className='text-[3.5em] sm:text-[5em] lg:text-[10em]' />
+          </p>
         )
       }
     </div>
