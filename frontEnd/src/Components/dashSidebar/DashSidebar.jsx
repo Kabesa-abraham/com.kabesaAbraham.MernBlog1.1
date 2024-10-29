@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './dashSidebar.css'
-import {HiUser,HiArrowSmRight, HiDocumentReport} from 'react-icons/hi'
+import {HiUser,HiArrowSmRight, HiDocumentReport, HiOutlineUserGroup} from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutSuccess } from '../../redux/user/userSlice';
@@ -38,12 +38,12 @@ const DashSidebar = () => {
 
   return (
     <div className='bg-[#ffffff0f] px-4 py-3 border-b border-[#66606048] md:border-r  h-full ' >
-      <div className='flex justify-around md:flex-col md:gap-2' >
+      <div className='flex items-center md:items-stretch justify-around md:flex-col md:gap-2' >
          <Link to='/dashboard?tab=profile' >
             <div className={tab==='profile'? 'profile_btn activer' : 'profile_btn'} > 
               <span className='flex gap-2 items-center text-[15px] md:text-xl font-semibold' >
                 <HiUser/>
-                <p>Profile</p>
+                <p className='op_text mr-2' >Profile</p>
               </span>
               <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2' >
                 {
@@ -56,16 +56,27 @@ const DashSidebar = () => {
           {
             currentUser.isAdmin &&
             <Link to={`/dashboard?tab=posts`} >
-            <div className={`side_btn ${tab==='posts'&& 'activer'}`} >
-              <HiDocumentReport />
-              <p>postes</p>
-            </div>
-          </Link>
+              <div className={`side_btn ${tab==='posts'&& 'activer'}`} >
+                <HiDocumentReport />
+                <p  className='op_text'>postes</p>
+              </div>
+            </Link>
           }
 
-          <div className='side_btn' onClick={handleSignOut}>
+          {
+            currentUser.isAdmin &&
+            <Link to={`/dashboard?tab=users`} >
+              <div className={`side_btn ${tab==='users'&& 'activer'}`} >
+                <HiOutlineUserGroup />
+                <p  className='op_text'>Utilisateurs</p>
+              </div>
+            </Link>
+          }
+
+          <div className='hidden md:flex md:gap-2 md:items-center md:px-4 md:py-3 md:rounded-md 
+                          md:cursor-pointer md:text-lg font-semibold hover:bg-[#afacac3b]  transition-all' onClick={handleSignOut}>
             <HiArrowSmRight className='text-lg md:text-2xl'/>
-            <p>Se Déconnecter</p>
+            <p  className='op_text'>Se Déconnecter</p>
           </div>
       </div>
     </div>

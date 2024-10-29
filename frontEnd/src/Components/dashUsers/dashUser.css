@@ -1,0 +1,20 @@
+.tableContaineruser .atable{
+    @apply shadow-md
+}
+.tableContaineruser .userImg{
+    @apply min-w-12 w-full h-12 rounded-[50%] object-cover bg-gray-500
+}
+
+.tableContaineruser .darkModeTitle{
+    color: white;
+}
+.tableContaineruser .darkMode{
+    color: rgba(255, 255, 255, 0.672);
+}
+.tableContaineruser .darkModeRow{
+    @apply border-2 border-gray-700 hover:bg-[#cdcbcb4c]
+}
+
+.tableContaineruser .voirPlus_btn{
+    @apply w-full text-teal-600 self-center text-sm py-4 bg-[#cdcbcb2d] mt-3
+}
