@@ -83,4 +83,28 @@ const deletePost = async(req,res,next) =>{
     }
 }
 
-module.exports = {createPoste,getPosts,deletePost}
+const updatePost = async(req,res,next) =>{
+    if(!req.user.isAdmin || req.user.id !== req.params.userId){
+        return next(errorHandler(403, "Vous n'êtes pas autorisé de supprimer ce Poste"));
+    }
+
+    try {
+        const updateThisPost = await Post.findByIdAndUpdate(
+                               req.params.postId ,
+                               {
+                                $set:{
+                                    title:req.body.title,
+                                    category:req.body.category,
+                                    content:req.body.content,
+                                    image:req.body.image
+                                } },
+                               {new:true}
+    )
+    res.status(200).json(updateThisPost)
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {createPoste,getPosts,deletePost,updatePost}

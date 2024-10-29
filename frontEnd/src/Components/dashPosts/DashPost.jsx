@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './dashPost.css'
 import {useSelector} from 'react-redux'
-import { Alert, Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { AiOutlineDelete,AiOutlineEdit } from "react-icons/ai";
 import { Link } from 'react-router-dom'
 import imgForReplacePostImg from '../../assets/img2.jpg'
 import { titleForPostTab } from '../../assets/text';
 import Swal from 'sweetalert2';
 import { FaBoxOpen, FaQuestion } from 'react-icons/fa';
-
 
 const DashPost = () => {
 
@@ -20,7 +19,7 @@ const DashPost = () => {
 
   useEffect(() =>{
     const fetchPost = async() =>{
-      try { 
+      try {
         const res = await fetch(`/backend/post/getPosts?userId=${currentUser._id}`)
         const data = await res.json();
       
@@ -138,7 +137,7 @@ const DashPost = () => {
                       </TableCell>
 
                       <TableCell>
-                        <Link to={`/update-post/${post}`} className='text-xl text-emerald-500 hover:text-teal-700'>
+                        <Link to={`/update-post/${post._id}`} className='text-xl text-emerald-500 hover:text-teal-700'>
                           <span><AiOutlineEdit/></span>
                         </Link>
                       </TableCell>

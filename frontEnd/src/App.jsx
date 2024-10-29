@@ -10,6 +10,7 @@ import Footer from './Components/footer/Footer';
 import OnlyAdminPrivateRoute from './Components/privateRoute/OnlyAdminPrivateRoute';
 import CreatePost from './Pages/CreatePost';
 import PrivateRoute from './Components/privateRoute/PrivateRoute';
+import UpdatePost from './Pages/UpdatePost';
 
 function App() {
   return (
@@ -21,12 +22,16 @@ function App() {
       <Route path='/sign-in' element={<SignIn/>} />
       <Route path='/sign-up' element={<SignUp/>} />
       <Route path='/projects' element={<Projects/>} />
+
       <Route element={<PrivateRoute/>} > {/*va me permettre de mettre ce composant privé */}
         <Route path='/dashboard' element={<Dashboard/>} /> {/*ce ci est sont enfant */}
       </Route>
+
       <Route element={<OnlyAdminPrivateRoute/>}>
         <Route path='/create-post' element={<CreatePost/>} />
+        <Route path='/update-post/:postId' element={<UpdatePost/>} />  {/*va s'afficher en fonction de l'id du Post*/}
       </Route>
+
     </Routes>
        <Footer/>
    </BrowserRouter>
