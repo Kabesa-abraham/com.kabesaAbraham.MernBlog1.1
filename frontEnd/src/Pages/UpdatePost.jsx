@@ -15,6 +15,9 @@ const UpdatePost = () => {
     const {postId} = useParams();
     const navigate = useNavigate();
 
+    const theId = formData._id
+    console.log(theId ,'hdhdhd')
+
     const [fileImg , setFileImg] = useState(null);
     const handleUploadImgviaFirebase = async()=>{
       console.log("vous devez mettre la fonction d'upload image");
@@ -24,7 +27,7 @@ const UpdatePost = () => {
     const handleUpdatePost = async(e) =>{
       e.preventDefault();
       try {
-        const res = await fetch(`/backend/post/updatePost/${formData._id}/${currentUser._id}`,{  //au niveau de l'id du post je peux aussi prendre le postId du useParams.
+        const res = await fetch(`/backend/post/updatePost/${postId}/${currentUser._id}`,{  //au niveau de l'id du post je peux aussi prendre le postId du useParams ou formdata._id.
           method:'PUT',
           headers:{
             'Content-Type':'application/json',
@@ -103,7 +106,7 @@ const UpdatePost = () => {
           </Button>
         </div>
 
-        <ReactQuill theme='snow' placeholder='Ecrivez quelque chose....' 
+        <ReactQuill theme="snow" placeholder='Ecrivez quelque chose....' 
                     className='h-52 md:h-72 mb-12' required
                     value={formData.content}
                     onChange={ (value) =>{setFormData({...formData , content:value})} }

@@ -13,3 +13,29 @@ body{
 .ql-editor{ /*POUR REACT-QUIL*/
     font-size: 1.05em;
 }
+
+.content_Post p{
+    margin-bottom: .5em;
+}
+.content_Post h1{
+    font-size: 1.5em;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin-top:1.5em;
+}
+.content_Post h2{
+    font-size: 1.4em;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin:1.5em 0;
+}
+.content_Post a{
+    color: rgb(73,149,199);
+    text-decoration: none;
+}
+.content_Post a:hover{
+    text-decoration: underline;
+}
+.dark .content_Post a{
+    color: rgb(73,149,255);
+}

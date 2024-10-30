@@ -11,6 +11,7 @@ import OnlyAdminPrivateRoute from './Components/privateRoute/OnlyAdminPrivateRou
 import CreatePost from './Pages/CreatePost';
 import PrivateRoute from './Components/privateRoute/PrivateRoute';
 import UpdatePost from './Pages/UpdatePost';
+import PostPage from './Pages/PostPage';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path='/create-post' element={<CreatePost/>} />
         <Route path='/update-post/:postId' element={<UpdatePost/>} />  {/*va s'afficher en fonction de l'id du Post*/}
       </Route>
+
+      <Route path='/post/:postSlug' element={<PostPage/>} />
 
     </Routes>
        <Footer/>
