@@ -3,6 +3,7 @@ import React,{useEffect, useState} from 'react'
 import './Style/postPage.css'
 import { Link, useParams } from 'react-router-dom'
 import imagePostTest from '../assets/img2.jpg'
+import CalltoAction from '../Components/callToAction/CalltoAction';
 
 const PostPage = () => {
 
@@ -70,6 +71,11 @@ const PostPage = () => {
             <div className='p-3 max-w-2xl mx-auto w-full content_Post'  
                            dangerouslySetInnerHTML={{__html:post && post.content}} >
             </div>
+
+            <div className='max-w-4xl mx-auto w-full' >
+                <CalltoAction/>
+            </div>
+
         </main>
     )
 

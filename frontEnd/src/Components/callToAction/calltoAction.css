@@ -1,0 +1,4 @@
+.calltoAction_container .btn_project{
+    @apply bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 text-white rounded-tl-xl rounded-bl-none
+           w-full font-semibold py-2 rounded-md
+}
