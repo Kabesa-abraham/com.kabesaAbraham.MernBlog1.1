@@ -4,6 +4,7 @@ import './Style/postPage.css'
 import { Link, useParams } from 'react-router-dom'
 import imagePostTest from '../assets/img2.jpg'
 import CalltoAction from '../Components/callToAction/CalltoAction';
+import CommentSection from '../Components/commentSection/CommentSection';
 
 const PostPage = () => {
 
@@ -75,6 +76,8 @@ const PostPage = () => {
             <div className='max-w-4xl mx-auto w-full' >
                 <CalltoAction/>
             </div>
+           
+            <CommentSection postId={post._id} />
 
         </main>
     )

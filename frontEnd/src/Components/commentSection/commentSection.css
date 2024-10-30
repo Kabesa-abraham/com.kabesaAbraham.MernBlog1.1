@@ -1,0 +1,4 @@
+.comment_container .envoi_btn{
+    @apply bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-600 text-white py-2 px-5
+        rounded-md hover:ring-4 ring-purple-200 transition-all text-sm
+}

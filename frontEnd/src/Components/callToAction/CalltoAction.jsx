@@ -9,14 +9,14 @@ const CalltoAction = () => {
                     rounded-tl-3xl rounded-br-3xl text-center  calltoAction_container' >
         <div className='flex-1 justify-center flex flex-col gap-3' >
             <h2 className='text-xl md:text-2xl font-semibold' >
-                Vous voulez apprendre plus apropo de JavaScript?
+              Apprendre le JavaScript, React en créant directement des site webs ?
             </h2>
             <p className='text-gray-500' >
                 Régardez ces Ressources contenant plus de 50 projets JavaScript
             </p>
             <ButtonBase className='btn_project' target='_blank'>
               <a href="#">
-                Plus de 50 Projets
+                Plus de 50 Projets Web
               </a>
             </ButtonBase>
         </div>
