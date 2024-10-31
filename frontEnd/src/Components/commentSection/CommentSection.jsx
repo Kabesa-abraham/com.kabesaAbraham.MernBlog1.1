@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './commentSection.css'
 import { useSelector } from 'react-redux'
 import profilePicImg from '../../assets/user_1728405613943.jpg'
 import { Link } from 'react-router-dom'
 import { Alert, ButtonBase } from '@mui/material'
-import {MdError} from 'react-icons/md'
+import {MdError, MdOutlineComment} from 'react-icons/md'
 
 const CommentSection = ({postId}) => {
     const {currentUser} = useSelector(state => state.user) //pour prendre l'utilisateur
@@ -38,6 +38,23 @@ const CommentSection = ({postId}) => {
             setCommentError(error.message)
         }  
     }
+
+    const [showComments, setShowComment] = useState([])
+    useEffect(()=> {
+        const showgetComments = async() =>{
+            try {
+                const res = await fetch(`/backend/comment/getPostComments/${postId}`);
+
+                if(res.ok){
+                    const data = await res.json();
+                    setShowComment(data);
+                }
+            } catch (error) {
+               console.log(error.message) 
+            }
+        }
+        showgetComments();
+    },[postId])
     
   return (
     <div className='max-w-2xl mx-auto w-full p-3 comment_container' >
@@ -86,6 +103,17 @@ const CommentSection = ({postId}) => {
            
           )
         }
+
+        {/*pour afficher les différents commentaires */}
+        {
+         showComments.length === 0 ? (
+           <p className='text-sm my-5' >Pas encore des commentaires!</p>
+         ) : (
+            <div className='' >
+             //je suis ici
+
+            </div>
+         )}
     </div>
   )
 }
