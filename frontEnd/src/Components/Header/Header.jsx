@@ -72,7 +72,7 @@ const Header = () => {
 
       {
         currentUser ? (
-          <Dropdown src={testProImg}>{/*currentUser.profilePicture*/}
+          <Dropdown src={currentUser.profilePicture}>{/*currentUser.profilePicture*/}
               <span className='block text-md' >@{currentUser.username}</span>
               <span className='block text-md font-semibold truncate' >@{currentUser.email}</span>
               <Link to={'/dashboard?tab=profile'}>

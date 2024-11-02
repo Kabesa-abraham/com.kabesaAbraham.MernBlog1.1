@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './dashProfile.css'
-import imgprofileForTest from '../../assets/user_1728405613943.jpg'
 import { useSelector } from 'react-redux'
 import { Alert, Button, CircularProgress, } from '@mui/material'
 import { updateStart,updateFaillure,updateSuccess,
@@ -15,7 +14,16 @@ import Swal from 'sweetalert2'
 const DashProfile = () => { 
 
   const {currentUser,error,loading} = useSelector(state => state.user); // pour prendre les info du user en sachant que celle-ci est persistant
-  
+ 
+  const [formdata,setFormdata] = useState({})  //ce ici que sera stocké tout les données à envoyé
+  const [updateUserSuccess , setUpdateUserSuccess] = useState(null)
+  const [updateUserError , setUpdateUserError] = useState(null)
+  const dispatch = useDispatch();
+
+  const handleChangeForm = (e) =>{
+    setFormdata({...formdata, [e.target.id] : e.target.value})
+  }
+
   //pour l'image
   const [uploadImage,setUploadImage] = useState(null)
   const [imageUrl,setImageUrl] = useState(null)
@@ -24,29 +32,38 @@ const DashProfile = () => {
     const file = e.target.files[0];
     if(file){
       setUploadImage(file);
-      setImageUrl(URL.createObjectURL(file))
+      setImageUrl(URL.createObjectURL(file)) //j'ai fait ça car l'img en lui ne peut pas être affiché comme ça dans ce contexte
     }
   }
 
-  useEffect(() =>{
+  useEffect(() =>{  //pour upload image
     if(uploadImage){
-      uploadTheImageViaFirebase()
+      uploadTheImage();
     }
   },[imageUrl]) //donc ce useEffect va s'éxecuter si il ya un changement de cette état imageUrl
-  const uploadTheImageViaFirebase = async() =>{
-   //pour cette fonction on aura besoin des services que propose firebase pour upload l'image qu'on aura
-   //et du module firebase pour faire tout ça
-   //qui va ainsi nous permettre de le mettre dans la BBD 
-   console.log("image doesn't upload we need firebase LA FONCTIONNALITE D'UPLOAD IMAGE PAS ENCORE FAITE!!! ")
-  }
 
-  const [formdata,setFormdata] = useState({})
-  const [updateUserSuccess , setUpdateUserSuccess] = useState(null)
-  const [updateUserError , setUpdateUserError] = useState(null)
-  const dispatch = useDispatch();
+  const uploadTheImage = async() =>{ //fonction d'upload image
+    const formdataImg = new FormData();
+    formdataImg.append('image',uploadImage)
 
-  const handleChangeForm = (e) =>{
-    setFormdata({...formdata, [e.target.id] : e.target.value})
+    try {
+      const res = await fetch('/backend/upload/upload_image',{
+        method:'POST',
+        headers:{
+          Accept:'application/json'
+        },
+        body:formdataImg
+      })
+      const data = await res.json();
+      if(!res.ok){
+        console.log(data.message)
+      }
+      if(res.ok){
+        setFormdata({...formdata , profilePicture:data.image_url})
+      }  
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleUpdateUser = async(e) =>{  //fonction pour mettre à jour un user
@@ -82,8 +99,7 @@ const DashProfile = () => {
     }
   }
 
-
-  const handleDeleteUser = async() =>{
+  const handleDeleteUser = async() =>{ //pour supprimer le compte
       try {
         dispatch(deleteUserStart())
 
@@ -139,7 +155,7 @@ const DashProfile = () => {
 
          <input type="file" accept='image/*' onChange={handleChangeImge} ref={filepickImg} hidden/>
          <div className='w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full' onClick={()=>filepickImg.current.click()} >
-            <img src={imageUrl? imageUrl : imgprofileForTest} alt="user" 
+            <img src={imageUrl || currentUser.profilePicture} alt="user" 
             className='w-full h-full rounded-[50%] object-cover border-8 border-[lightgray]'/>  {/*normalement dans image qui se trouve dans  currentUser.profilePicture mais on n'a pas encore achévé cette partie */}
          </div>
       
@@ -203,7 +219,6 @@ const DashProfile = () => {
           {error}
         </Alert>
        }
-
     </div>
   )
 }

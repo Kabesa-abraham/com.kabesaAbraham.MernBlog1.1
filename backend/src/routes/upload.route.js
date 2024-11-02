@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const cors = require('cors')
 
+
 const router = express();
 router.use(cors())
 
@@ -16,10 +17,9 @@ const Storage = multer.diskStorage({
 
 const upload = multer({storage:Storage});
 
-
 //route d'upload image
 router.post('/upload_image', upload.single('image'), (req,res) =>{
-    res.send({
+    res.json({
         success:1,
         image_url:`http://localhost:${3000}/images/${req.file.filename}`,
     })
