@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button } from '@mui/material'
+import { Alert, Button, CircularProgress } from '@mui/material'
 import { useSelector } from 'react-redux'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'
@@ -15,14 +15,42 @@ const UpdatePost = () => {
     const {postId} = useParams();
     const navigate = useNavigate();
 
-    const theId = formData._id
-    console.log(theId ,'hdhdhd')
-
     const [fileImg , setFileImg] = useState(null);
-    const handleUploadImgviaFirebase = async()=>{
-      console.log("vous devez mettre la fonction d'upload image");
-    //nous devons mettre la logique pour upload l'image via firebase mais la je ne vais pas encore le faire
-    }
+    const [uploadError , setUploadError] = useState(null);
+    const [uploadLoading , setUploadLoading] = useState(null);
+    const handleUploadImg = async()=>{  //pour upload l'image
+      const formdataImg = new FormData();
+      formdataImg.append('image', fileImg);
+
+      if(fileImg === null){
+        setUploadError('vous devez sélectionner une image')
+      }else{
+      try {
+        setUploadError(null);
+        setUploadLoading(true)
+        const res = await fetch('/backend/upload/upload_image',{
+          method:'POST',
+          headers:{ Accept: 'application/json'},
+          body:formdataImg
+        })
+        const data = await res.json();
+
+        if(!res.ok){
+         setUploadError(data.message)
+         setUploadLoading(false)
+        }
+        if(res.ok){
+          setFileImg(data.image_url)
+          setFormData({...formData , image:data.image_url})
+          setUploadLoading(false)
+        }
+
+      } catch (error) {
+        setUploadError("Echec de chargement de l'image")
+        setUploadLoading(false)
+      }
+    }}
+
 
     const handleUpdatePost = async(e) =>{
       e.preventDefault();
@@ -101,10 +129,27 @@ const UpdatePost = () => {
           <input type='file' className={`input_file ${theme==='dark'&& 'text-white'}`} 
                  onChange={(e)=>setFileImg(e.target.files[0])}
           />
-          <Button className='upload_btn' onClick={handleUploadImgviaFirebase}>
-              Upload Image  
+          <Button className='upload_btn' onClick={handleUploadImg}>
+            { uploadLoading ? (
+                    <>
+                      <CircularProgress size={25} style={{marginRight:'7px'}}/>
+                      <span className='lowercase text-sm text-white' >En attente...</span>
+                    </>
+                  ) : "Upload Image"
+             }
           </Button>
         </div>
+
+        {
+          formData.image && (
+            <img src={formData.image} alt="" className='max-h-[200px] md:max-h-[400px] object-cover'/>
+          )
+        }
+        {
+          uploadError && <Alert className='mt-3' color='error' icon={<MdError/>} >
+          {uploadError}
+          </Alert>
+        }
 
         <ReactQuill theme="snow" placeholder='Ecrivez quelque chose....' 
                     className='h-52 md:h-72 mb-12' required
