@@ -29,7 +29,7 @@ const PostPage = () => {
                 }if(res.ok){
                     setPost(data.posts[0]);
                     setLoading(false)
-                    setError(false)
+                    setError(false) 
                 }
             } catch (error) {
                setLoading(false);
@@ -77,7 +77,7 @@ const PostPage = () => {
                 <CalltoAction/>
             </div>
            
-            <CommentSection postId={post._id} />
+            <CommentSection postId={post._id} />  {/*je met le postId dans cette composant */}
 
         </main>
     )

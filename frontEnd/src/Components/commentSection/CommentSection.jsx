@@ -4,14 +4,15 @@ import { useSelector } from 'react-redux'
 import profilePicImg from '../../assets/user_1728405613943.jpg'
 import { Link } from 'react-router-dom'
 import { Alert, ButtonBase } from '@mui/material'
-import {MdError, MdOutlineComment} from 'react-icons/md'
+import {MdError} from 'react-icons/md'
+import Comments from '../comments/Comments'
 
 const CommentSection = ({postId}) => {
     const {currentUser} = useSelector(state => state.user) //pour prendre l'utilisateur
 
     const [comment ,setComment] = useState(''); //pour le nombre de caractères qui sera dans le commentaire
     const [commentError, setCommentError] = useState(null);
-
+    const [showComments, setShowComment] = useState([])
     const handleSendComment = async(e) =>{
         e.preventDefault()
 
@@ -31,15 +32,15 @@ const CommentSection = ({postId}) => {
             const data = await res.json();
     
             if(res.ok){
-                setCommentError(null)
                 setComment('')// je clear le champ du commentaire
+                setCommentError(null)
+                //setShowComment((data)=> [data , ...comment])
             }
         } catch (error) {
             setCommentError(error.message)
         }  
     }
 
-    const [showComments, setShowComment] = useState([])
     useEffect(()=> {
         const showgetComments = async() =>{
             try {
@@ -54,7 +55,7 @@ const CommentSection = ({postId}) => {
             }
         }
         showgetComments();
-    },[postId])
+    },[postId,comment]) //ceci sera fait si le postId change ou le si il ya un nouveau comment
     
   return (
     <div className='max-w-2xl mx-auto w-full p-3 comment_container' >
@@ -109,10 +110,24 @@ const CommentSection = ({postId}) => {
          showComments.length === 0 ? (
            <p className='text-sm my-5' >Pas encore des commentaires!</p>
          ) : (
-            <div className='' >
-             //je suis ici
+            <>
+             <div className='text-sm md:text-lg my-5 flex items-center gap-2' >
+                <p>Commentaires</p>
+                <div className='border border-gray-400 py-1 px-3 md:px-4 rounded-sm' >
+                    <p>{showComments.length}</p>
+                </div>
+             </div>
+             {
+                showComments.map((item,i) =>(
+                    <Comments
+                     key={i}
+                     comment={item}
+                    />
+                ))
+             }
+            </>
+          
 
-            </div>
          )}
     </div>
   )

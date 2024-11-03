@@ -16,7 +16,7 @@ const PostSchema = new mongoose.Schema({
     },
     image:{
         type:String,
-        default:''
+        default:'http://localhost:3000/images/image_1730577177332.jpg'
     },
     category:{
         type:String,
