@@ -9,4 +9,5 @@ router.get('/getPosts', getPosts);
 router.delete('/deletePost/:postId/:userId' , verifyToken , deletePost)
 router.put('/updatePost/:postId/:userId' , verifyToken, updatePost)
 
+
 module.exports =router;

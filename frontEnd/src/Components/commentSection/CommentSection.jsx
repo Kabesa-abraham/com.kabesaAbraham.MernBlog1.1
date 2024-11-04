@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Alert, ButtonBase } from '@mui/material'
 import {MdError} from 'react-icons/md'
 import Comments from '../comments/Comments'
+import { useNavigate } from "react-router-dom";
 
 const CommentSection = ({postId}) => {
     const {currentUser} = useSelector(state => state.user) //pour prendre l'utilisateur
@@ -34,7 +35,7 @@ const CommentSection = ({postId}) => {
             if(res.ok){
                 setComment('')// je clear le champ du commentaire
                 setCommentError(null)
-                //setShowComment((data)=> [data , ...comment])
+                setShowComment([data, ...showComments])  
             }
         } catch (error) {
             setCommentError(error.message)
@@ -55,7 +56,40 @@ const CommentSection = ({postId}) => {
             }
         }
         showgetComments();
-    },[postId,comment]) //ceci sera fait si le postId change ou le si il ya un nouveau comment
+    },[postId]) //ceci sera fait si le postId change ou le si il ya un nouveau comment
+
+    const navigate = useNavigate();
+    const handleCommentLike = async(commentId) =>{
+        try {
+            if(!currentUser){
+                navigate('/sign-in');
+                return;
+            }
+            const res = await fetch(`/backend/comment/likeComment/${commentId}`,{
+                method:'PUT',
+            });
+
+            if(res.ok){
+                const data = await res.json();
+
+                setShowComment(showComments.map(comment =>{
+                    if(comment._id === commentId){
+                        return {
+                            ...comment,
+                            likes: data.likes,
+                            numberOfLikes:data.likes.length,
+                        }
+                    }
+                    return comment;
+                } ))
+            }
+           
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    
     
   return (
     <div className='max-w-2xl mx-auto w-full p-3 comment_container' >
@@ -100,34 +134,32 @@ const CommentSection = ({postId}) => {
                  commentError &&
                     <Alert className='mt-5' color='error' icon={<MdError/>} >{commentError}</Alert>
                 }
-            </form>
-           
+            </form>  
           )
         }
 
         {/*pour afficher les différents commentaires */}
         {
-         showComments.length === 0 ? (
-           <p className='text-sm my-5' >Pas encore des commentaires!</p>
-         ) : (
-            <>
-             <div className='text-sm md:text-lg my-5 flex items-center gap-2' >
-                <p>Commentaires</p>
-                <div className='border border-gray-400 py-1 px-3 md:px-4 rounded-sm' >
-                    <p>{showComments.length}</p>
+            showComments.length === 0 ? (
+            <p className='text-sm my-5' >Pas encore des commentaires!</p>
+            ) : (
+                <>
+                <div className='text-sm md:text-lg my-5 flex items-center gap-2' >
+                    <p>Commentaires</p>
+                    <div className='border border-gray-400 py-1 px-3 md:px-4 rounded-sm' >
+                        <p>{showComments.length}</p>
+                    </div>
                 </div>
-             </div>
-             {
-                showComments.map((item,i) =>(
-                    <Comments
-                     key={i}
-                     comment={item}
-                    />
-                ))
-             }
-            </>
-          
-
+                {
+                    showComments.map((item,i) =>(
+                        <Comments
+                        key={i}
+                        comment={item}
+                        onCommentLike={handleCommentLike}
+                        />
+                    ))
+                }
+                </>
          )}
     </div>
   )
