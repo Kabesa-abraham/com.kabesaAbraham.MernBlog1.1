@@ -7,6 +7,7 @@ import { Alert, ButtonBase } from '@mui/material'
 import {MdError} from 'react-icons/md'
 import Comments from '../comments/Comments'
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CommentSection = ({postId}) => {
     const {currentUser} = useSelector(state => state.user) //pour prendre l'utilisateur
@@ -99,7 +100,44 @@ const CommentSection = ({postId}) => {
             return myComment;
         } ))
     }
-    
+
+    const handleDeleteComment = async(commentId) =>{
+        console.log(commentId)
+        try {
+            if(!currentUser){
+                navigate('/sign-in');
+                return
+            }
+            const res = await fetch(`/backend/comment/deleteComment/${commentId}`,{
+                method:'DELETE'
+            })
+
+            if(res.ok){
+                const data = await res.json();
+                setShowComment(
+                    showComments.filter((commenter)=> commenter._id !== commentId )
+                )
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+
+    }
+    const mySwalAlert3 = (commentId)=>{  //le popup qui va s'afficher lorsque on declenchera le bouton de suppression du user
+        console.log(commentId , 'pour my swal')
+        Swal.fire({
+          icon: "warning",
+          position:'center',
+          text:"Est-vous sûr de vouloir supprimer ce Commentaire ?",
+          showCancelButton:true, 
+          cancelButtonText:'Annuler',
+          confirmButtonText:'Oui, je suis sûr',
+        }).then((res) =>{
+          if(res.isConfirmed){
+            handleDeleteComment(commentId);
+          }
+        })
+      }
     
   return (
     <div className='max-w-2xl mx-auto w-full p-3 comment_container' >
@@ -167,6 +205,7 @@ const CommentSection = ({postId}) => {
                         comment={item}
                         onCommentLike={handleCommentLike}
                         onEditComment = {handleEditComment}
+                        HandleDeleteComment= {mySwalAlert3}
                         />
                     ))
                 }

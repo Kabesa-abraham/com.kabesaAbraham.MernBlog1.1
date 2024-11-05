@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import moment from "moment";
 import { FaThumbsUp } from "react-icons/fa";
 
-const Comments = ({comment,onCommentLike,onEditComment}) => {
+const Comments = ({comment,onCommentLike,onEditComment,HandleDeleteComment}) => {
 
     const {theme} = useSelector(state => state.theme);
     const {currentUser} = useSelector(state => state.user);
@@ -84,6 +84,7 @@ const Comments = ({comment,onCommentLike,onEditComment}) => {
                     >
                         Enregitrer
                     </button>
+
                     <button
                      type='button'
                      className='p-2 border border-pink-600 rounded-lg hover:bg-gradient-to-r from-indigo-600 to-pink-600 
@@ -110,13 +111,23 @@ const Comments = ({comment,onCommentLike,onEditComment}) => {
                     </p>
                     {
                         currentUser && (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                          <div className='flex gap-2 text-gray-400 ' >
                             <button
                             type='button'
                             onClick={() => HandleEditTheComment()}
-                            className='text-gray-400 hover:text-indigo-500'
+                            className='hover:text-indigo-500'
                             >
                                 Modifier
                             </button>
+
+                            <button
+                            type='button'
+                            onClick={() => HandleDeleteComment(comment._id)}
+                            className='hover:text-pink-500'
+                            >
+                                Supprimer
+                            </button>
+                          </div>
                         )
                     }
                 </div>

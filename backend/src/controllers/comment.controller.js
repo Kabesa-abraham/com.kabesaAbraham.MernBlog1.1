@@ -87,4 +87,22 @@ const editComment = async(req,res,next) =>{
     }
 }
 
-module.exports = {createComment,getPostComments,likeComment,editComment}
+const deleteComment = async(req,res,next) =>{
+    try {
+        const comment = await Comment.findById(req.params.commentId);
+        if(!comment){
+            return next(errorHandler(404, 'commentaire pas trouvé'))
+        }
+        if(comment.userId !== req.user.id && !req.user.isAdmin){
+            return next(errorHandler(403, "vous n'êtes pas permis de supprimer ce commentaire"))
+        }
+
+        await Comment.findByIdAndDelete(req.params.commentId);
+        res.status(200).json('Commentaire supprimé avec succée')
+        
+    } catch (error) {
+        return next(error)
+    }
+}
+
+module.exports = {createComment,getPostComments,likeComment,editComment,deleteComment}
