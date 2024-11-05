@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import imagePostTest from '../assets/img2.jpg'
 import CalltoAction from '../Components/callToAction/CalltoAction';
 import CommentSection from '../Components/commentSection/CommentSection';
+import PostCart from '../Components/postCart/PostCart';
 
 const PostPage = () => {
 
@@ -13,9 +14,8 @@ const PostPage = () => {
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(false);
     const [post ,setPost] = useState(null)
-    //console.log(post)
-    useEffect(()=>{
 
+    useEffect(()=>{
         const fetchPost = async() =>{
             try {    
                 setLoading(true)
@@ -39,6 +39,24 @@ const PostPage = () => {
 
         fetchPost();
     },[postSlug])
+
+    const [recentPosts,setRecentPosts] = useState(null);
+    useEffect(() =>{
+        try{
+            const fetchRecentPosts = async () =>{
+                const res = await fetch(`/backend/post/getPosts?limit=3`);
+                const data = await res.json();
+
+                if(res.ok){
+                    setRecentPosts(data.posts)
+                }
+            }
+            fetchRecentPosts();
+         }catch(error){
+            console.log(error.message)
+        } 
+    },[])
+
 
 
     if(loading) return(
@@ -78,6 +96,21 @@ const PostPage = () => {
             </div>
            
             <CommentSection postId={post._id} />  {/*je met le postId dans cette composant */}
+
+            <div className='flex flex-col justify-center items-center mb-5' >
+                <h1 className='text-xl mt-5 '>Articles Récents</h1>
+
+                <div className='flex flex-wrap 2xl:flex-nowrap gap-5 mt-5 justify-center' >
+                   { recentPosts &&
+                    recentPosts.map((posts,i) =>(
+                        <PostCart
+                        key={i}
+                        post={posts}
+                        />
+                    ))
+                   }
+                </div>
+            </div>
 
         </main>
     )

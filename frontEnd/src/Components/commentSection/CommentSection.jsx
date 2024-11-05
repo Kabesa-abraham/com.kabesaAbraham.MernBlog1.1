@@ -102,7 +102,6 @@ const CommentSection = ({postId}) => {
     }
 
     const handleDeleteComment = async(commentId) =>{
-        console.log(commentId)
         try {
             if(!currentUser){
                 navigate('/sign-in');
@@ -121,10 +120,8 @@ const CommentSection = ({postId}) => {
         } catch (error) {
             console.log(error.message)
         }
-
     }
     const mySwalAlert3 = (commentId)=>{  //le popup qui va s'afficher lorsque on declenchera le bouton de suppression du user
-        console.log(commentId , 'pour my swal')
         Swal.fire({
           icon: "warning",
           position:'center',
