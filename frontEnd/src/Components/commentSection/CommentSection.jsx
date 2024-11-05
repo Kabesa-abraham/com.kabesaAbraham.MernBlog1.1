@@ -89,6 +89,16 @@ const CommentSection = ({postId}) => {
         }
     }
 
+    const handleEditComment = async(comment, editedContent) =>{ //pour mettre à jour le comment qui se trouve ici par le new comment
+        setShowComment(showComments.map(myComment =>{
+            if(myComment._id === comment._id){
+                return {
+                    ...myComment,
+                    content: editedContent
+            } }
+            return myComment;
+        } ))
+    }
     
     
   return (
@@ -156,6 +166,7 @@ const CommentSection = ({postId}) => {
                         key={i}
                         comment={item}
                         onCommentLike={handleCommentLike}
+                        onEditComment = {handleEditComment}
                         />
                     ))
                 }
