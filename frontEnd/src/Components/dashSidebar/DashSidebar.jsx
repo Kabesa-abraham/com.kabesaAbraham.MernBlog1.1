@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './dashSidebar.css'
-import {HiUser,HiArrowSmRight, HiDocumentReport, HiOutlineUserGroup} from 'react-icons/hi'
+import {HiUser,HiArrowSmRight, HiDocumentReport, HiOutlineUserGroup,HiAnnotation} from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutSuccess } from '../../redux/user/userSlice';
@@ -65,12 +65,22 @@ const DashSidebar = () => {
 
           {
             currentUser.isAdmin &&
+            <>
             <Link to={`/dashboard?tab=users`} >
               <div className={`side_btn ${tab==='users'&& 'activer'}`} >
                 <HiOutlineUserGroup />
                 <p  className='op_text'>Utilisateurs</p>
               </div>
             </Link>
+
+            
+            <Link to={`/dashboard?tab=comments`} >
+              <div className={`side_btn ${tab==='comments'&& 'activer'}`} >
+                <HiAnnotation />
+                <p  className='op_text'>Commentaires</p>
+              </div>
+            </Link>
+            </>
           }
 
           <div className='hidden md:flex md:gap-2 md:items-center md:px-4 md:py-3 md:rounded-md 

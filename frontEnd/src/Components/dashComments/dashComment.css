@@ -1,0 +1,20 @@
+.tableContainercomment .atable{
+    @apply shadow-md
+}
+.tableContainercomment .userImg{
+    @apply min-w-12 w-full h-12 rounded-[50%] object-cover bg-gray-500
+}
+
+.tableContainercomment .darkModeTitle{
+    color: white;
+}
+.tableContainercomment .darkMode{
+    color: rgba(255, 255, 255, 0.672);
+}
+.tableContainercomment .darkModeRow{
+    @apply border-2 border-gray-700 hover:bg-[#cdcbcb4c]
+}
+
+.tableContainercomment .voirPlus_btn{
+    @apply w-full text-teal-600 self-center text-sm py-4 bg-[#cdcbcb2d] mt-3
+}
