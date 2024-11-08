@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './dashSidebar.css'
-import {HiUser,HiArrowSmRight, HiDocumentReport, HiOutlineUserGroup,HiAnnotation} from 'react-icons/hi'
+import {HiUser,HiArrowSmRight, HiDocumentReport, HiOutlineUserGroup,HiAnnotation ,HiOutlineChartPie} from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutSuccess } from '../../redux/user/userSlice';
@@ -39,13 +39,24 @@ const DashSidebar = () => {
   return (
     <div className='bg-[#ffffff0f] px-4 py-3 border-b border-[#66606048] md:border-r  h-full ' >
       <div className='flex items-center md:items-stretch justify-around md:flex-col md:gap-2' >
+
+          {
+            currentUser && currentUser.isAdmin &&
+            <Link to={`/dashboard?tab=dashMenuPrincpal`} >
+              <div className={`side_btn ${tab==='dashMenuPrincpal'&& 'activer'}`} >
+                <HiOutlineChartPie />
+                <p  className='op_text'>Menu Principal</p>
+              </div>
+            </Link>
+          }
+
          <Link to='/dashboard?tab=profile' >
             <div className={tab==='profile'? 'profile_btn activer' : 'profile_btn'} > 
               <span className='flex gap-2 items-center text-[15px] md:text-xl font-semibold' >
                 <HiUser/>
                 <p className='op_text mr-2' >Profile</p>
               </span>
-              <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2' >
+              <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2 textAdminUser' >
                 {
                   currentUser.isAdmin? "Admin" : "Utilisateur"
                 }

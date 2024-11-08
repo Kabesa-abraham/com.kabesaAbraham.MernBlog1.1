@@ -10,3 +10,6 @@
 .op_text{
     @apply hidden md:inline
 }
+.textAdminUser{
+    @apply hidden md:inline
+}

@@ -4,6 +4,9 @@
 .tableContainercomment .userImg{
     @apply min-w-12 w-full h-12 rounded-[50%] object-cover bg-gray-500
 }
+.tableContainercomment .contentRow{
+    @apply font-medium min-w-60 max-w-[450px]
+}
 
 .tableContainercomment .darkModeTitle{
     color: white;

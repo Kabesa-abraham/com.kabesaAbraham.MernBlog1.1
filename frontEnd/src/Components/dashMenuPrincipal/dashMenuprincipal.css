@@ -1,0 +1,12 @@
+.tableuserContainer .atable{
+    @apply shadow-md
+}
+.tableuserContainer .tableRow{
+    @apply border-2 border-gray-700 bg-gray-800
+}
+.tableuserContainer .darkMode{
+    color: rgba(255, 255, 255, 0.672);
+}
+.tableuserContainer .content_row{
+    @apply max-w-[32em]
+} 

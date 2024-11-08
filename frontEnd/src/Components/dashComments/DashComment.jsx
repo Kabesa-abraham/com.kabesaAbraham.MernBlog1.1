@@ -110,7 +110,7 @@ const DashComment = () => {
                          {new Date(comment.updatedAt).toLocaleDateString()}
                       </TableCell>
 
-                      <TableCell className={`font-medium ${theme==='dark'&&'darkModeTitle'}`} >
+                      <TableCell className={`contentRow ${theme==='dark'&&'darkModeTitle'}`} >
                           { comment.content }
                       </TableCell>
 
