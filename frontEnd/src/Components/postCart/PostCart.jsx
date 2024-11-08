@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const PostCart = ({post}) => {
   return (
     <div className='group relative w-full border border-indigo-500 hover:border-2 h-[365px] overflow-hidden 
-        max-w-[430px] rounded-xl transition-all '>  {/*j'ai mis la classe group de tailwind */}
+        max-w-[408px] rounded-xl transition-all '>  {/*j'ai mis la classe group de tailwind */}
         <Link to={`/post/${post.slug}`} >
           <img src={post.image} alt="post cover" 
                className='h-[260px] w-full object-cover group-hover:h-[200px] transition-all duration-300 z-20 '
