@@ -147,7 +147,7 @@ const DashPost = () => {
               }
             </Table>
             {
-              showMore &&(
+              showMore===true &&(
                 <Button className='voirPlus_btn' onClick={handleShowMore}>
                   Voir Plus
                 </Button>

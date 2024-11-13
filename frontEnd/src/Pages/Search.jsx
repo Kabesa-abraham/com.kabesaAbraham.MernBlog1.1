@@ -18,7 +18,7 @@ const Search = () => {
 
   const [posts , setPosts] = useState([]);
   const [loading,setLoading] = useState(false);
-  const [showmore,setShowmore] = useState(false);
+  const [showmore,setShowmore] = useState(true);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,8 +50,8 @@ const Search = () => {
         const data = await res.json();
         setPosts(data.posts);
         setLoading(false);
-        if(posts.length === 9){
-          setShowmore(true);
+        if(data.posts.length < 9){
+          setShowmore(false)
         }
       }
 
@@ -87,24 +87,21 @@ const Search = () => {
   }
 
   const handleShowMore = async() =>{
-    const numberOfPost = posts.length;
-    //const startIndex = numberOfPost - 1;
+    const startIndex = posts.length;
 
-    // const urlParams = new URLSearchParams(location.search);
-    // urlParams.set('startIndex',startIndex);
-    // const searchQuery = urlParams.toString();
+     const urlParams = new URLSearchParams(location.search);
+     urlParams.set('startIndex',startIndex);
+     const searchQuery = urlParams.toString();
 
     try {
-      const res = await fetch(`/backend/post/getPosts?startIndex=${numberOfPost}`)
+      const res = await fetch(`/backend/post/getPosts?${searchQuery}`)
       if(!res.ok){
         return;
       }
       if(res.ok){
         const data = await res.json();
         setPosts([...posts, ...data.posts])
-        if(data.posts.length === 9){ //si ces postes sont encore égale à 9 alors on va encore afficher le bouton
-          setShowmore(true);
-        }else{
+        if(data.posts.length < 9){ //si ces postes sont encore égale à 9 alors on va encore afficher le bouton
           setShowmore(false);
         }
       }
@@ -175,7 +172,7 @@ const Search = () => {
             ))
           }
           {
-            showmore && 
+            showmore===true && 
             <button onClick={handleShowMore} className='text-teal-600 text-lg w-full hover:underline ' >Voir Plus</button>
           }
         </div>

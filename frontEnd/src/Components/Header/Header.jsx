@@ -81,9 +81,11 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
       <AiOutlineSearch className='text-xl' />
     </form>
 
-    <button className='w-12 h-10 flex justify-center items-center lg:hidden text-lg search_btn2' >
-      <AiOutlineSearch/>
-    </button>
+    <Link to={`/search`} >
+      <button className='w-12 h-10 flex justify-center items-center lg:hidden text-lg search_btn2' >
+        <AiOutlineSearch/>
+      </button>
+    </Link>
 
     <div className='flex items-center gap-3 md:order-2' >
       <button  className='min-w-12 min-h-10 hidden sm:flex justify-center items-center search_btn2'
@@ -105,8 +107,8 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
                 </div>
                 <ul
                   tabIndex={0}
-                  className={`menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-60 p-2 shadow
-                  flex flex-col gap-1 text-sm ${theme==="dark"&&"bg-[#143961]"}`}
+                  className={`menu menu-sm dropdown-content bg-[#143961] text-white rounded-box z-[1] mt-3 w-60 p-2 shadow
+                  flex flex-col gap-1 text-sm `}
                  >
                   <li className='mb-2' >@{currentUser.username}</li>
                   <li>@{currentUser.email}</li>
@@ -121,6 +123,15 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
                       </button>
                     </li>
                   </Link>
+
+                  <Link to={'/dashboard?tab=dashMenuPrincpal'}>
+                    <li >
+                      <button className="text-sm p-3 justify-between">
+                        Menu Principal
+                      </button>
+                    </li>
+                  </Link>
+
                   <hr/>
                   <li>
                     <button className='text-sm p-3' onClick={handleSignOut} >déconnexion</button>
@@ -139,10 +150,10 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
       }
       
       {
-        active ? <button className='w-11 h-9 flex justify-center items-center md:hidden menu_btn' onClick={HandleShopOption}>
+        active ? <button className='w-14 h-9 flex justify-center items-center md:hidden menu_btn' onClick={HandleShopOption}>
         <MdClose className='text-2xl ' />
         </button> :
-        <button className='w-11 h-9 flex justify-center items-center md:hidden menu_btn' onClick={HandleShopOption}>
+        <button className='w-14 h-9 flex justify-center items-center md:hidden menu_btn' onClick={HandleShopOption}>
         <MdMenu className='text-2xl ' />
         </button>
       }
@@ -164,6 +175,13 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
             Projects
           </button>
         </Link>
+
+        <button className='sm:hidden block' 
+               onClick={() => {dispatch(toggleTheme())
+                               change()}} > {/*j'ai aussi mis search_btn2' pour utilisé son style */}
+        {theme==='light'?<FaSun/> : <FaMoon/>}
+        </button>
+        
      </div>
 
    </header>

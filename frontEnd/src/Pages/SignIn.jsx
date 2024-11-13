@@ -101,7 +101,7 @@ const SignIn = () => {
                   ) : "Sign Up"
                 }
               </Button>
-              <Oauth className='google_btn'/>
+              {/* <Oauth className='google_btn'/> je l'ai d'abord désactiver */}
             </form>
 
             <div className='flex gap-2 text-sm mt-5 font-semibold ' >

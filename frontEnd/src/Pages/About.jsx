@@ -5,7 +5,7 @@ const About = () => {
     <div className='min-h-screen flex items-center justify-center' >
       <div className='max-w-2xl mx-auto p-3 text-center' >
         <div>
-          <h1 className='text-3xl font-semibold text-center my-7' >About de Abram's Blog</h1>
+          <h1 className='text-3xl font-semibold text-center my-7' >Apropo de Abram's Blog</h1>
           <div className='text-sm lg:text-lg text-gray-500 flex flex-col gap-6' >
              <p>
                 Bienvenue sur  Abram's Blog! Ce blog a été créé par  Kabesa Abraham (Actuellement Etudiant en Informatique à l'ucc Don Akam) comme un projet personnel
