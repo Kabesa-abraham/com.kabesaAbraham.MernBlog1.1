@@ -88,14 +88,14 @@ const Search = () => {
 
   const handleShowMore = async() =>{
     const numberOfPost = posts.length;
-    const startIndex = numberOfPost - 1;
+    //const startIndex = numberOfPost - 1;
 
-    const urlParams = new URLSearchParams(location.search);
-    urlParams.set('startIndex',startIndex);
-    const searchQuery = urlParams.toString();
+    // const urlParams = new URLSearchParams(location.search);
+    // urlParams.set('startIndex',startIndex);
+    // const searchQuery = urlParams.toString();
 
     try {
-      const res = await fetch(`/backend/post/getPosts?${searchQuery}`)
+      const res = await fetch(`/backend/post/getPosts?startIndex=${numberOfPost}`)
       if(!res.ok){
         return;
       }
