@@ -13,6 +13,7 @@ import PrivateRoute from './Components/privateRoute/PrivateRoute';
 import UpdatePost from './Pages/UpdatePost';
 import PostPage from './Pages/PostPage';
 import ScrollToTop from './Components/ScrollToTop';
+import Search from './Pages/Search';
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
       </Route>
 
       <Route path='/post/:postSlug' element={<PostPage/>} />
+
+      <Route path='/search' element={<Search/>} />
 
     </Routes>
        <Footer/>

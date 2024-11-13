@@ -44,7 +44,7 @@ const getPosts = async(req,res,next) =>{
                     {content: {$regex: req.query.searchTerm, $options:'i' }},
                 ],
             }),
-        }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit)
+        }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit) //le sort représente l'ordre dans la quel on veut avoir le info
 
         const totalPostes = await Post.countDocuments(); //pour prendre le nombre des postes que nous avons
 

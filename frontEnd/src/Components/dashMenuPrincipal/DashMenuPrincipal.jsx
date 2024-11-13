@@ -136,120 +136,116 @@ const DashMenuPrincipal = () => {
 
      </div>
 
-     <div className='grid lg:grid-cols-2 justify-center gap-5 py-5 w-full  mx-auto' >
+     <div className='flex flex-wrap justify-center gap-5 py-5 w-full  mx-auto' >
+      
+        <div className={`overflow-x-auto flex flex-col md:m-auto shadow-md p-4 w-full lg:w-[587px] rounded-md ${theme==='dark'&&'bg-gray-800'} `}>
+          <div className='flex justify-between p-3 text-lg font-semibold' >
+            <h1 className='text-center p-2' >Utilisateurs Recents</h1>
+            <Link to={'/dashboard?tab=users'} >
+              <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
+                border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
+                  Voir Tout
+              </button>
+            </Link>
+          </div>
 
-        <div className={`flex flex-col w-full md:m-auto shadow-md p-4 rounded-lg  ${theme==='dark'&&'bg-gray-800'}`}>
-            <div className='flex justify-between p-3 text-sm font-semibold' >
-                <h1 className='text-center p-2 text-lg' >Utilisateurs Recents</h1>
-                <Link to={'/dashboard?tab=users'} >
-                  <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
-                  border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
-                      Voir Tout
-                  </button>
-                </Link>
-            </div>
+          <table className="table">
+            {/* head */}
+            <thead className='bg-[#7d7d7f1d]' >
+              <tr className={`text-sm ${theme==='dark'&&'text-white'}`} >
+                <th>Profile Img</th>
+                <th>Nom Utilisateur</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row */}
+            {
+              users && users.map((item,i) =>(
+                <tr  className={`bg-white hover:bg-[#cdcbcb63] transition-all ${theme==='dark'&& 'tableRow'}`} >
+                  <td>
+                    <img src={item.profilePicture} alt="" 
+                                className='w-10 h-10 rounded-full bg-gray-300'
+                    />  
+                  </td>
+                  <td >{item.username}</td>
+                </tr>
+              ))
+            }      
+            </tbody>
+          </table>
+      </div>
 
-            <Table className=''>
-               <TableHead className={`bg-[#cbcdcb36] ${theme==='dark'&& 'tableRow'}`}>
-                 <TableCell className={`uppercase ${theme==='dark'&&'darkMode'}`} >Profile Img</TableCell>
-                 <TableCell className={`uppercase ${theme==='dark'&&'darkMode'}`} >Nom Utilisateur</TableCell>
-               </TableHead>
-               {
-                users && users.map((item,i) =>(
-                  <TableBody key={i} className='divide-y' >
-                    <TableRow className={`bg-white hover:bg-[#cdcbcb63] transition-all  ${theme==='dark'&& 'tableRow'}`}>
-                        
-                      <TableCell>
-                        <img src={item.profilePicture} alt="" 
-                             className='w-10 h-10 rounded-full bg-gray-300'
-                        />   
-                      </TableCell>
-                      <TableCell>
-                        <h3 className={`font-semibold text-sm lg:text-lg ${theme==='dark'&& 'text-white'}`} >{item.username}</h3>
-                      </TableCell>
-
-                    </TableRow>
-                  </TableBody>
-                ))
-               }
-            </Table>
-        </div>
-        
-        <div className={`flex flex-col w-full md:m-auto shadow-md p-4 rounded-md ${theme==='dark'&&'bg-gray-800'}`}>
-            <div className='flex justify-between p-3 text-sm font-semibold' >
-                <h1 className='text-center p-2 text-lg' >Commentaires Recents</h1>
-                <Link to={'/dashboard?tab=comments'} >
-                  <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
-                  border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
-                      Voir Tout
-                  </button>
-                </Link>
-            </div>
-
-            <Table className=''>
-               <TableHead className={`bg-[#cbcdcb36] ${theme==='dark'&& 'tableRow'}`}>
-                 <TableCell className={`w-[460px] ${theme==='dark'&&'darkMode'}`} >Contenus</TableCell>
-                 <TableCell className={`${theme==='dark'&&'darkMode'}`} >Nbr Likes</TableCell>
-               </TableHead>
-               {
-                comments && comments.map((item,i) =>(
-                  <TableBody key={i} className='divide-y' >
-                    <TableRow className={`bg-white ${theme==='dark'&& 'tableRow'}`}>
-                        
-                      <TableCell className='content_row'>
-                        <p className={`line-clamp-2 ${theme==='dark'&& 'text-white'}`} >{item.content}</p>
-                      </TableCell>      
-                      <TableCell>
-                        <p className={`text-lg text-center ${theme==='dark'&& 'text-white'}`} >{item.numberOfLikes}</p>
-                      </TableCell>
-
-                    </TableRow>
-                  </TableBody>
-                ))
-               }
-            </Table>
+        <div className={`overflow-x-auto flex flex-col md:m-auto shadow-md p-4 w-full lg:w-[587px] rounded-md ${theme==='dark'&&'bg-gray-800'} `}>
+        <div className='flex justify-between p-3 text-lg font-semibold' >
+          <h1 className='text-center p-2' >Commentaires Recents</h1>
+          <Link to={'/dashboard?tab=comments'} >
+            <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
+              border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
+                Voir Tout
+            </button>
+          </Link>
         </div>
 
-        <div className={`flex flex-col w-full md:m-auto shadow-md p-4 rounded-md ${theme==='dark'&&'bg-gray-800'}`}>
-            <div className='flex justify-between p-3 text-lg font-semibold' >
-                <h1 className='text-center p-2' >Postes Recents</h1>
-                <Link to={'/dashboard?tab=posts'} >
-                  <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
-                  border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
-                      Voir Tout
-                  </button>
-                </Link>
-            </div>
+        <table className="table">
+          {/* head */}
+          <thead className='bg-[#7d7d7f1d]' >
+            <tr className={`text-sm ${theme==='dark'&&'text-white'}`} >
+              <th>Contenus</th>
+              <th>Nbr Like</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row */}
+          {
+            comments && comments.map((item,i) =>(
+              <tr  className={`bg-white hover:bg-[#cdcbcb63] transition-all ${theme==='dark'&& 'tableRow'}`} >
+                <td><p className={`line-clamp-2`}>{item.content}</p></td>
+                <td className='text-lg text-center py-3' >{item.numberOfLikes}</td>
+              </tr>
+            ))
+          }      
+          </tbody>
+        </table>
+      </div>
 
-            <Table className=''>
-               <TableHead className={`bg-[#cbcdcb36] ${theme==='dark'&& 'tableRow'}`}>
-                 <TableCell className={`${theme==='dark'&&'darkMode'}`} >Poste Img</TableCell>
-                 <TableCell className={`${theme==='dark'&&'darkMode'}`} >Poste title</TableCell>
-                 <TableCell className={`${theme==='dark'&&'darkMode'}`} >Catégory</TableCell>
-               </TableHead>
-               {
-                posts && posts.map((item,i) =>(
-                  <TableBody key={i} className='divide-y' >
-                    <TableRow className={`bg-white hover:bg-[#cdcbcb63] transition-all  ${theme==='dark'&& 'tableRow'}`}>
-                        
-                      <TableCell>
-                        <img src={item.image} alt="" 
-                             className='w-14 h-10 rounded-md bg-gray-300'
-                        />   
-                      </TableCell>
-                      <TableCell>
-                        <h3 className={`line-clamp-2 font-semibold text-sm lg:text-lg ${theme==='dark'&& 'text-white'}`} >{item.title}</h3>
-                      </TableCell>
-                      <TableCell>
-                        <h3 className={`text-sm ${theme==='dark'&& 'text-white'}`} >{item.category}</h3>
-                      </TableCell>
-
-                    </TableRow>
-                  </TableBody>
-                ))
-               }
-            </Table>
+      <div className={`overflow-x-auto flex flex-col md:m-auto shadow-md p-4 w-full lg:w-[587px] rounded-md ${theme==='dark'&&'bg-gray-800'} `}>
+        <div className='flex justify-between p-3 text-lg font-semibold' >
+          <h1 className='text-center p-2' >Postes Recents</h1>
+          <Link to={'/dashboard?tab=posts'} >
+            <button className={`btn bg-transparent hover:bg-gradient-to-r from-indigo-600 to-pink-600 hover:text-white hover:border-none transition-all
+              border-[3px] border-pink-600 ${theme==='dark'&&'text-white'}`}>
+                Voir Tout
+            </button>
+          </Link>
         </div>
+
+        <table className="table">
+          {/* head */}
+          <thead className='bg-[#7d7d7f1d]' >
+            <tr className={`text-sm ${theme==='dark'&&'text-white'}`} >
+              <th>Poste img</th>
+              <th>Poste titre</th>
+              <th>Catégory</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row */}
+          {
+            posts && posts.map((item,i) =>(
+              <tr  className={`bg-white hover:bg-[#cdcbcb63] transition-all ${theme==='dark'&& 'tableRow'}`} >
+                <td> 
+                  <img src={item.image} alt="" 
+                          className='w-14 h-10 rounded-md bg-gray-300'
+                  />   
+                </td>
+                <td>{item.title}</td>
+                <td>{item.category}</td>
+              </tr>
+            ))
+          }      
+          </tbody>
+        </table>
+      </div>
 
      </div>
 

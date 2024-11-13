@@ -7,6 +7,7 @@ import { signOutSuccess } from '../../redux/user/userSlice';
 import { useSelector } from 'react-redux';
 
 const DashSidebar = () => {
+  const {theme} = useSelector(state =>state.theme)
 
   const location = useLocation();
   const [tab,setTab] = useState('');
@@ -56,7 +57,7 @@ const DashSidebar = () => {
                 <HiUser/>
                 <p className='op_text mr-2' >Profile</p>
               </span>
-              <p className='bg-[#0f073c] text-white text-[10px] md:text-[13px] rounded-[15px] py-1 px-2 textAdminUser' >
+              <p className={`badge badge-neutral badge-lg`} >
                 {
                   currentUser.isAdmin? "Admin" : "Utilisateur"
                 }

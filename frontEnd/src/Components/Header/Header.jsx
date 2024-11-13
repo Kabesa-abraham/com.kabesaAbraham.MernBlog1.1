@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './header.css';
 import { Link } from 'react-router-dom';
 import {AiOutlineSearch} from 'react-icons/ai';
 import {FaMoon,FaSun} from 'react-icons/fa';
 import {MdClose, MdMenu} from 'react-icons/md';
-import { Button, ButtonBase} from '@mui/material';
-import Dropdown from '../dropdown/Dropdown';
-import testProImg from '../../assets/user_1728405613943.jpg';
 import {useSelector,useDispatch} from 'react-redux';
 import { toggleTheme } from '../../redux/theme/themeSlice';
 import { signOutSuccess } from '../../redux/user/userSlice';
+import { useLocation,useNavigate } from 'react-router-dom'
 
 
 const Header = () => {
@@ -21,7 +19,7 @@ const Header = () => {
     }else{
       setActive(false)
   }}
- const change= () =>{ //je l'ai mis dans les differents options pour cacher la barre des options
+ const change= () =>{ //je l'ai mis dans les differents options pour cacher la barre des options lorque nous sont en mobile
   setActive(false)
  }
 
@@ -44,6 +42,26 @@ const Header = () => {
   } catch (error) { console.log(error.message)}
 }
 
+const [searchTerm, setSearchTerm] = useState(''); 
+const location = useLocation();
+const navigate = useNavigate();
+useEffect(() =>{ //va me permettre d'écouter la barre de recherche
+  const urlParams = new URLSearchParams(location.search); //en mettant search je prends tout ce qui suit après le ?
+  const searchTermFromUrl = urlParams.get('searchTerm'); //et je prend le searchTerm
+  if(searchTermFromUrl){ //si il ya une value dans ce const on le met dans ce state
+    setSearchTerm(searchTermFromUrl); //et je prends la valeur pour le mettre dans ce state
+  }
+},[location.search]) //ceci s'effectura si le location.search change
+
+const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
+  e.preventDefault();
+  const urlParams = new URLSearchParams(location.search);
+  urlParams.set('searchTerm',searchTerm); //j'ai dit avec la fonction se que je veux modifier le value de searchTerm
+  const searchQuery = urlParams.toString();
+  navigate(`/search?${searchQuery}`);
+}
+
+
   return (
    <header className='bg-[#ffffff0f] flex justify-between items-center relative py-3 px-[3%] md:px-[6%] border-b-2 containers'>
 
@@ -55,8 +73,11 @@ const Header = () => {
 
     <form 
       className='bg-[#cdcbcb2a] px-4 py-3 rounded-lg hidden lg:flex items-center search'
+      onSubmit={handleSearchTerm}
      >
-      <input type='text' placeholder='Rechercher...' className='bg-transparent border-none outline-none'/>
+      <input type='text' placeholder='Rechercher...' 
+             className='bg-transparent border-none outline-none' 
+             value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} />
       <AiOutlineSearch className='text-xl' />
     </form>
 
@@ -65,28 +86,55 @@ const Header = () => {
     </button>
 
     <div className='flex items-center gap-3 md:order-2' >
-      <button  className='w-12 h-10 hidden sm:flex justify-center items-center search_btn2'
+      <button  className='min-w-12 min-h-10 hidden sm:flex justify-center items-center search_btn2'
                onClick={() => dispatch(toggleTheme())} > {/*j'ai aussi mis search_btn2' pour utilisé son style */}
         {theme==='light'?<FaSun/> : <FaMoon/>}
       </button>
 
       {
         currentUser ? (
-          <Dropdown src={currentUser.profilePicture}>{/*currentUser.profilePicture*/}
-              <span className='block text-md' >@{currentUser.username}</span>
-              <span className='block text-md font-semibold truncate' >@{currentUser.email}</span>
-              <Link to={'/dashboard?tab=profile'}>
-                <ButtonBase className={theme==='light'? 'profile_btn':'profile_btn buttondark'}>Profile</ButtonBase>
-              </Link>
-              <hr />     
-                <ButtonBase className={theme==='light'? 'sedecon_btn':'sedecon_btn buttondark'} onClick={handleSignOut}>Se déconnecter</ButtonBase>
-          </Dropdown>
+          <div className="navbar bg-transparent">
+            <div className="flex-none gap-2">
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-12 h-12 rounded-full">
+                    <img
+                      alt={currentUser.username}
+                      src={currentUser.profilePicture} className='rounded-full truncate' />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className={`menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-60 p-2 shadow
+                  flex flex-col gap-1 text-sm ${theme==="dark"&&"bg-[#143961]"}`}
+                 >
+                  <li className='mb-2' >@{currentUser.username}</li>
+                  <li>@{currentUser.email}</li>
+
+                  <Link to={'/dashboard?tab=profile'}>
+                    <li >
+                      <button className="text-sm p-3 justify-between">
+                        Profile
+                        <span className="badge">
+                          {currentUser.isAdmin? 'admin' : 'user'}
+                        </span>
+                      </button>
+                    </li>
+                  </Link>
+                  <hr/>
+                  <li>
+                    <button className='text-sm p-3' onClick={handleSignOut} >déconnexion</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         ) : 
         (
         <Link to='/sign-in' >
-          <Button variant='outlined' className='sign_btn' >
+          <button className='sign_btn' >
             Se Connecter
-          </Button>
+          </button>
         </Link>)
       }
       
