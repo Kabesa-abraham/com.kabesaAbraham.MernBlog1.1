@@ -8,9 +8,12 @@ const uploadRoute = require('./src/routes/upload.route.js')
 const commentRoute = require('./src/routes/comment.route.js')
 const cors = require('cors');
 const cookieParser = require('cookie-parser')  //va nous permettre d'extraire des cookies dans le navigateur du user sans aucun problème
+const path = require('path');
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log('MongoDB connected!')})
                                        .catch((err) => {console.log(err);})
+
+const __dirnames = path.resolve();
 
 const app = express();
 
@@ -22,6 +25,12 @@ app.use('/backend/auth' , authRoute )
 app.use('/backend/post' , postRoute)
 app.use('/backend/comment' , commentRoute)
 app.use('/backend/upload', uploadRoute); //pour upload une image
+
+app.use(express.static(path.join(__dirnames, '/frontEnd/dist')))
+
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirnames, 'frontEnd','dist','index.html'))
+})
 
 app.use(cors())
 

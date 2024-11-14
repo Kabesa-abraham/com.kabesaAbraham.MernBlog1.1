@@ -124,13 +124,17 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
                     </li>
                   </Link>
 
-                  <Link to={'/dashboard?tab=dashMenuPrincpal'}>
-                    <li >
-                      <button className="text-sm p-3 justify-between">
-                        Menu Principal
-                      </button>
-                    </li>
-                  </Link>
+                  {
+                    currentUser.isAdmin && (
+                    <Link to={'/dashboard?tab=dashMenuPrincpal'}>
+                      <li >
+                        <button className="text-sm p-3 justify-between">
+                          Menu Principal
+                        </button>
+                      </li>
+                    </Link>
+                    )
+                  }
 
                   <hr/>
                   <li>
