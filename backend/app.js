@@ -26,10 +26,10 @@ app.use('/backend/post' , postRoute)
 app.use('/backend/comment' , commentRoute)
 app.use('/backend/upload', uploadRoute); //pour upload une image
 
-app.use(express.static(path.join(__dirnames, '../frontEnd/dist')))
+app.use(express.static(path.join(__dirnames, 'frontEnd/dist')))
 
 app.get('*', (req,res)=>{
-    res.sendFile(path.join(__dirnames, '../frontEnd','dist','index.html'))
+    res.sendFile(path.join(__dirnames, 'frontEnd/dist','index.html'))
 })
 
 app.use(cors())
