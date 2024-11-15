@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, CircularProgress } from '@mui/material'
 import { useSelector } from 'react-redux'
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
 import { MdError } from 'react-icons/md';
 import {useNavigate, useParams} from 'react-router-dom'
 
@@ -151,11 +151,11 @@ const UpdatePost = () => {
           </Alert>
         }
 
-        {/* <ReactQuill theme="snow" placeholder='Ecrivez quelque chose....' 
+        <ReactQuill theme="snow" placeholder='Ecrivez quelque chose....' 
                     className='h-52 md:h-72 mb-12' required
                     value={formData.content}
                     onChange={ (value) =>{setFormData({...formData , content:value})} }
-        /> */}
+        />
 
         <Button type='submit' className='publish_btn'>
           Mettre à jour
