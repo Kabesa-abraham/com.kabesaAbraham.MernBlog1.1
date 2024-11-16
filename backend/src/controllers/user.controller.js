@@ -1,12 +1,12 @@
 //ce ici qu'on mettra toutes nos differentes fonctions de user qu'on va passer dans le dossier routes
-const User = require("../models/user.model");
-const errorHandler = require("../utils/error");
-const bcryptjs = require('bcryptjs');
+import User from "../models/user.model";
+import errorHandler from "../utils/error";
+import bcryptjs from 'bcryptjs';
 
-const test = (req,res) => {
+export const test = (req,res) => {
     res.json({message:'salut les gars'}) }
 
-const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour le user
+export const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour le user
    if(req.user.id !== req.params.userId){
     return next(errorHandler(401, "Vous n'êtes pas autorisé à mettre à jour cet utilisateur!"))
    }
@@ -49,7 +49,7 @@ const updateUser = async(req, res, next) =>{ //la fonction pour mettre à jour l
     
 } 
 
-const deleteUser = async(req,res,next) =>{
+export const deleteUser = async(req,res,next) =>{
     if(!req.user.isAdmin && req.user.id !== req.params.userId){
         return next(errorHandler(403, "Vous n'êtes pas permis à supprimer ce compte"))
     }
@@ -60,13 +60,13 @@ const deleteUser = async(req,res,next) =>{
     } catch (error) { next(error) }
 }
 
-const signOut = async(req,res,next) =>{
+export const signOut = async(req,res,next) =>{
     try {
         res.clearCookie('access_token').status(200).json("L'utilisateur a été déconnecter")
     } catch (error) { next(error) }
 }
 
-const getUsers = async(req,res,next) =>{
+export const getUsers = async(req,res,next) =>{
     if(!req.user.isAdmin){
         return next(errorHandler(403, "Vous n'êtes pas permis de voire tout les utilisateur"))
     }
@@ -110,7 +110,7 @@ const getUsers = async(req,res,next) =>{
     }
 }
 
-const getUser = async(req,res,next) =>{
+export const getUser = async(req,res,next) =>{
     try {
         const user = await User.findById(req.params.userId);
         if(!user){
@@ -122,5 +122,3 @@ const getUser = async(req,res,next) =>{
         next(error);
     }
 }
-
-module.exports= {test,updateUser,deleteUser,signOut,getUsers,getUser};

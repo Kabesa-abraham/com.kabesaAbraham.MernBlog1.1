@@ -1,10 +1,12 @@
-const User = require("../models/user.model");
-const bcryptjs = require('bcryptjs'); //va me permettre de crypter mon mot de passe
-const errorHandler = require("../utils/error");
-const jwt = require('jsonwebtoken')
-require('dotenv').config();
+import User from "../models/user.model";
+import bcryptjs from 'bcryptjs'; //va me permettre de crypter mon mot de passe
+import errorHandler from "../utils/error";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const signup = async(req,res,next) =>{
+dotenv.config();
+
+export const signup = async(req,res,next) =>{
    const {username,email,password} = req.body;
 
    if(!username || !email || !password || username=== '' || email=== '' || password=== ''){
@@ -27,7 +29,7 @@ const signup = async(req,res,next) =>{
    
 }
 
-const signin = async(req,res,next) =>{
+export const signin = async(req,res,next) =>{
   const {email,password} = req.body;
 
    if(!email || !password || email==="" || password=== ""){
@@ -59,7 +61,7 @@ const signin = async(req,res,next) =>{
    }
 }
 
-const google = async(req,res,next) =>{  //cette fonction va permettre de signin ou signup avec votre compte google que vous allez récupérer
+export const google = async(req,res,next) =>{  //cette fonction va permettre de signin ou signup avec votre compte google que vous allez récupérer
    const {name, email, googlePhotoUrl} = req.body;
    try {
       const user = await User.findOne({email});
@@ -91,5 +93,3 @@ const google = async(req,res,next) =>{  //cette fonction va permettre de signin 
    } catch (error) {
       next(error)}
 }
-
-module.exports= {signup, signin, google};

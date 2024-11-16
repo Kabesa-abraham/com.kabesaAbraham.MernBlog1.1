@@ -1,8 +1,8 @@
-const Post = require("../models/post.model");
-const errorHandler = require("../utils/error")
+import Post from "../models/post.model";
+import errorHandler from "../utils/error";
 
 
-const createPoste = async(req,res,next) =>{
+export const createPoste = async(req,res,next) =>{
     if(!req.user.isAdmin){
         return next(errorHandler(403, "vous n'êtes pas permis de créer un poste"));
     }
@@ -26,7 +26,7 @@ const createPoste = async(req,res,next) =>{
     }
 }
 
-const getPosts = async(req,res,next) =>{
+export const getPosts = async(req,res,next) =>{
     //Donc on va utilisé le systeme de requêtes pour pouvoir prendre les infos que vous voulons 
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
@@ -70,7 +70,7 @@ const getPosts = async(req,res,next) =>{
     }
 }
 
-const deletePost = async(req,res,next) =>{
+export const deletePost = async(req,res,next) =>{
     if(!req.user.isAdmin || req.user.id !== req.params.userId){
         return next(errorHandler(403 , "Vous n'êtes pas autorisé de supprimer une Poste"))
     }
@@ -83,7 +83,7 @@ const deletePost = async(req,res,next) =>{
     }
 }
 
-const updatePost = async(req,res,next) =>{
+export const updatePost = async(req,res,next) =>{
     if(!req.user.isAdmin || req.user.id !== req.params.userId){
         return next(errorHandler(403, "Vous n'êtes pas autorisé de supprimer ce Poste"));
     }
@@ -106,5 +106,3 @@ const updatePost = async(req,res,next) =>{
         next(error)
     }
 }
-
-module.exports = {createPoste,getPosts,deletePost,updatePost}

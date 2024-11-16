@@ -1,14 +1,16 @@
-const express = require('express')
-require('dotenv').config();
-const mongoose = require('mongoose')
-const userRoute = require('./src/routes/user.route.js')
-const authRoute = require('./src/routes/auth.route.js')
-const postRoute = require('./src/routes/post.route.js')
-const uploadRoute = require('./src/routes/upload.route.js')
-const commentRoute = require('./src/routes/comment.route.js')
-const cors = require('cors');
-const cookieParser = require('cookie-parser')  //va nous permettre d'extraire des cookies dans le navigateur du user sans aucun problème
-const path = require('path');
+import express from 'express';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import userRoute from './src/routes/user.route.js';
+import authRoute from './src/routes/auth.route.js';
+import postRoute from './src/routes/post.route.js';
+import uploadRoute from './src/routes/upload.route.js';
+import commentRoute from './src/routes/comment.route.js';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';  //va nous permettre d'extraire des cookies dans le navigateur du user sans aucun problème
+import path from 'path';
+
+dotenv.config();
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log('MongoDB connected!')})
                                        .catch((err) => {console.log(err);})

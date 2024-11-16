@@ -1,7 +1,7 @@
-const Comment = require("../models/comment.model");
-const errorHandler = require("../utils/error");
+import Comment from "../models/comment.model";
+import errorHandler from "../utils/error";
 
-const createComment = async(req,res,next) =>{
+export const createComment = async(req,res,next) =>{
     try {
         const {content, postId,userId} = req.body;
         
@@ -24,7 +24,7 @@ const createComment = async(req,res,next) =>{
     }
 }
 
-const getPostComments = async(req,res,next) =>{
+export const getPostComments = async(req,res,next) =>{
     try {
         const comments = await Comment.find({postId:req.params.postId}).sort({
             createdAt: -1, //pour que le nouveau commentaire soit le premier
@@ -36,7 +36,7 @@ const getPostComments = async(req,res,next) =>{
     }
 }
 
-const likeComment = async(req,res,next) =>{
+export const likeComment = async(req,res,next) =>{
     try {
 
         const comment = await Comment.findById(req.params.commentId);
@@ -60,7 +60,7 @@ const likeComment = async(req,res,next) =>{
     }
 }
 
-const editComment = async(req,res,next) =>{
+export const editComment = async(req,res,next) =>{
     try {
         
       const comment = await Comment.findById(req.params.commentId);
@@ -87,7 +87,7 @@ const editComment = async(req,res,next) =>{
     }
 }
 
-const deleteComment = async(req,res,next) =>{
+export const deleteComment = async(req,res,next) =>{
     try {
         const comment = await Comment.findById(req.params.commentId);
         if(!comment){
@@ -105,7 +105,7 @@ const deleteComment = async(req,res,next) =>{
     }
 }
 
-const getComments = async(req,res,next) =>{
+export const getComments = async(req,res,next) =>{
     if(!req.user.isAdmin){
         return next(errorHandler(403,"Vous n'etes pas permis de voire tout ces comments"));
     }
@@ -132,5 +132,3 @@ const getComments = async(req,res,next) =>{
         next(error)
     }
 }
-
-module.exports = {createComment,getPostComments,likeComment,editComment,deleteComment,getComments}

@@ -1,10 +1,8 @@
-const express = require('express');
-const {signup,signin, google} = require('../controllers/auth.controller');
+import express from 'express';
+import {signup,signin, google} from '../controllers/auth.controller';
 
-const router = express.Router();
+export const router = express.Router();
 
 router.post('/signup', signup);
 router.post('/signin' , signin);
 router.post('/google', google); //le route pour la fonction frontend qu'on va créer
-
-module.exports=router;

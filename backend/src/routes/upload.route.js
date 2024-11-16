@@ -1,10 +1,10 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const cors = require('cors')
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import cors from 'cors';
 
 
-const router = express();
+export const router = express();
 router.use(cors())
 
 //configuration de multer pour enregistrer les images dans le dossier upload/images
@@ -24,5 +24,3 @@ router.post('/upload_image', upload.single('image'), (req,res) =>{
         image_url:`http://localhost:${3000}/images/${req.file.filename}`,
     })
 })
-
-module.exports = router;

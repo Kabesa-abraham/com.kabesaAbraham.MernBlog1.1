@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -26,6 +26,4 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true} //nous avons mis ça pour que ça sauvegarde automatique le temps de création du user et du mise à jour
 );
 
-const User = mongoose.model('User',userSchema)
-
-module.exports=User;
+export const User = mongoose.model('User',userSchema)

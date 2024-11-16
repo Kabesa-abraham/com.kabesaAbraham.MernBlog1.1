@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const errorHandler = require('./error.js');
+import jwt from 'jsonwebtoken';
+import errorHandler from './error.js';
 //require('./error.js')
-const verifyToken = (req, res, next) =>{ //ce middleware va me permettre de vérifier le token qui a été générer lors du auth du user
+export const verifyToken = (req, res, next) =>{ //ce middleware va me permettre de vérifier le token qui a été générer lors du auth du user
     const token = req.cookies.access_token; //grâce à cookie-parser j'accède au token qui est dans le navigateur
     if(!token){
         return next(errorHandler(401, 'Unauthorized'));
@@ -14,5 +14,3 @@ const verifyToken = (req, res, next) =>{ //ce middleware va me permettre de vér
         next();
     })
 }
-
-module.exports= verifyToken;
