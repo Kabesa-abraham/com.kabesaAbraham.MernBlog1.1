@@ -1,8 +1,8 @@
-import {User} from "../models/user.model";
 import bcryptjs from 'bcryptjs'; //va me permettre de crypter mon mot de passe
-import {errorHandler} from "../utils/error";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { errorHandler } from '../utils/error';
+import { User } from '../models/user.model';
 
 dotenv.config();
 

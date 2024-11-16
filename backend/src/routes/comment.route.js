@@ -1,6 +1,6 @@
 import express from 'express';
-import {createComment, getPostComments, likeComment, editComment, deleteComment, getComments} from '../controllers/comment.controller';
-import {verifyToken} from '../utils/verifyUser';
+import { createComment, deleteComment, editComment, getComments, getPostComments, likeComment } from '../controllers/comment.controller';
+import { verifyToken } from '../utils/verifyUser';
 
 
 export const router = express();
