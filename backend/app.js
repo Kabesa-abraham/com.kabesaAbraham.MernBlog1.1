@@ -13,7 +13,7 @@ const path = require('path');
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log('MongoDB connected!')})
                                        .catch((err) => {console.log(err);})
 
-const __dirnames = path.resolve();
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -26,10 +26,10 @@ app.use('/backend/post' , postRoute)
 app.use('/backend/comment' , commentRoute)
 app.use('/backend/upload', uploadRoute); //pour upload une image
 
-app.use(express.static(path.join(__dirnames, 'frontEnd/dist')))
+app.use(express.static(path.join(__dirname, '/frontEnd/dist')))
 
 app.get('*', (req,res)=>{
-    res.sendFile(path.join(__dirnames, 'frontEnd/dist','index.html'))
+    res.sendFile(path.join(__dirname, 'frontEnd','dist','index.html'))
 })
 
 app.use(cors())
