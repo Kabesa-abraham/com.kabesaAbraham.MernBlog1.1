@@ -4,7 +4,7 @@ import path from 'path';
 import cors from 'cors';
 
 
-export const router = express();
+const router = express();
 router.use(cors())
 
 //configuration de multer pour enregistrer les images dans le dossier upload/images
@@ -24,3 +24,5 @@ router.post('/upload_image', upload.single('image'), (req,res) =>{
         image_url:`http://localhost:${3000}/images/${req.file.filename}`,
     })
 })
+
+export default router;

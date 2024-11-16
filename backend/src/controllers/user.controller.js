@@ -1,6 +1,6 @@
 //ce ici qu'on mettra toutes nos differentes fonctions de user qu'on va passer dans le dossier routes
-import {User} from "../models/user.model";
-import {errorHandler} from "../utils/error";
+import {User} from "../models/user.model.js";
+import {errorHandler} from "../utils/error.js";
 import bcryptjs from 'bcryptjs';
 
 export const test = (req,res) => {
