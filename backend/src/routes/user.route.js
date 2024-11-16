@@ -1,7 +1,7 @@
 //ce ici qu'on va passer nos différents Endpoints pour le user
 import express from 'express';
 import {test,updateUser, deleteUser, signOut, getUsers, getUser} from '../controllers/user.controller';
-import verifyToken from '../utils/verifyUser';
+import { verifyToken } from '../utils/verifyUser';
 
 export const router = express.Router();
 

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import errorHandler from './error.js';
+import {errorHandler} from './error.js';
 //require('./error.js')
 export const verifyToken = (req, res, next) =>{ //ce middleware va me permettre de vérifier le token qui a été générer lors du auth du user
     const token = req.cookies.access_token; //grâce à cookie-parser j'accède au token qui est dans le navigateur

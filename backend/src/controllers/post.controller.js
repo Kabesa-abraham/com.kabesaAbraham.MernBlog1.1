@@ -1,5 +1,5 @@
-import Post from "../models/post.model";
-import errorHandler from "../utils/error";
+import {Post} from "../models/post.model";
+import {errorHandler} from "../utils/error";
 
 
 export const createPoste = async(req,res,next) =>{
