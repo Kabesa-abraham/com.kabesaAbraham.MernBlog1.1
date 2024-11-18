@@ -66,25 +66,26 @@ export const google = async(req,res,next) =>{  //cette fonction va permettre de 
    try {
       const user = await User.findOne({email});
       if(user){
-         const token = jwt.sign({id: user._id ,isAdmin : user.isAdmin}, process.env.JWT_SECRET_KEY)
+         const token = jwt.sign({id: user._id , isAdmin : user.isAdmin}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'})
          const {password, ...rest} = user._doc;
 
          res.status(200).cookie('access_token' , token , {
            httpOnly:true
          }).json(rest)
-      }else{
+      }
+      if(!user){
          const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8); //va géneré un mot de passe qui va contenir des lettres et nombres et on ne prendra que les 8last codes
          const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
 
          const newUser = new User({
             username: name.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4), //en prenant le nom je l'ai mis en miniscule,supprimer les spaces et mis des nombres aléatoires au devant pour le rendre unique
-            email,
+            email: email,
             password : hashedPassword,
             profilePicture : googlePhotoUrl
          });
-         await newUser.save();
-         const token = jwt.sign({id : user._id , isAdmin:newUser.isAdmin}, process.env.JWT_SECRET_KEY);
-         const {password, ...rest} = newUser._doc;
+         const aUser = await newUser.save();
+         const token = jwt.sign({id : aUser._id , isAdmin:aUser.isAdmin}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
+         const {password, ...rest} = aUser._doc;
 
          res.status(200).cookie('access_token', token , {
             httpOnly:true
