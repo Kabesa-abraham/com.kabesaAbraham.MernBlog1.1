@@ -35,7 +35,7 @@ const DashProfile = () => {
       setImageUrl(URL.createObjectURL(file)) //j'ai fait ça car l'img en lui ne peut pas être affiché comme ça dans ce contexte
     }
   }
-
+ 
   useEffect(() =>{  //pour upload image
     if(uploadImage){
       uploadTheImage();
