@@ -8,7 +8,7 @@ import uploadRoute from './src/routes/upload.route.js';
 import commentRoute from './src/routes/comment.route.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';  //va nous permettre d'extraire des cookies dans le navigateur du user sans aucun problème
-import path from 'path';
+import path from 'path'
 
 dotenv.config();
 
