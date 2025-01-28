@@ -171,12 +171,12 @@ const handleSearchTerm = (e) =>{//la fonction pour la barre de recherche
         </Link>
         <Link to='/about' >
           <button className='option_btn' onClick={change}>
-            About
+            A propo
           </button>
         </Link>
         <Link to='/projects' >
           <button className='option_btn' onClick={change}>
-            Projects
+            Projets
           </button>
         </Link>
 

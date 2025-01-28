@@ -93,7 +93,7 @@ const SignUp = () => {
                       <CircularProgress size={25} className='circularprogress'/>
                       <span className='lowercase text-sm text-white' >En attente...</span>
                     </>
-                  ) : "Sign Up"
+                  ) : "Créer Compte"
                 }
               </Button>
               <Oauth className='google_btn'/>

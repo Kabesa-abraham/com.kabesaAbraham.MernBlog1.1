@@ -36,8 +36,6 @@ app.get('*', (req,res)=>{
 
 app.use(cors())
 
-app.use('/images' , express.static('upload/images')) //pour l'image uploadé
-
 app.listen(3000, () =>{
     console.log('app running on port 3000')
 })
