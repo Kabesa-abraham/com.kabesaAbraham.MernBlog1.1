@@ -1,6 +1,6 @@
 # 📝 MernBlog - Mon Portfolio  
 
-Bienvenue sur MonBlog, un projet full-stack que j'ai développé avec React et Node.js pour présenter mes compétences en développement web.  
+Bienvenue sur Abram'sBlog, un projet full-stack que j'ai développé avec React et Node.js pour présenter mes compétences en développement web.  
 
 ## 📝 Description  
 Ce projet est une plateforme de blog basé sur le développement où les utilisateurs peuvent :  
